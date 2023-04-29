@@ -53,6 +53,10 @@ function App() {
     document.body.appendChild(audio);
   };
 
+  const startOcr = () => {
+    console.log("Starting OCR");
+  };
+
   const transcribeAudio = () => {
     getAudioTranscription(audioFile)
       .then((response) => {
@@ -212,11 +216,12 @@ function App() {
                       setShowTextReportBox(!showTextReportBox);
                     }}
                   />
+                  <CameraComponent onCapture={startOcr} />
                   <IconButton
                     aria-label="Open chat"
                     icon={<FaCamera />}
                     onClick={() => {
-                      //Insert function here;
+                      startOcr()
                     }}
                   />
                   <Button
