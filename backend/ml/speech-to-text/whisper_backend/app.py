@@ -1,6 +1,8 @@
 import os
 
 import whisper
+import pytesseract
+from PIL import Image
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -33,6 +35,14 @@ def transcribe_file():
     else:
         return 'Invalid file format. Please upload a .webm file.'
 
+@app.route('/ocr', methods=['POST'])
+def ocr():
+    image = request.files['image']
+    try:
+        text = pytesseract.image_to_string(image)
+        return jsonify({'text': text})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)
