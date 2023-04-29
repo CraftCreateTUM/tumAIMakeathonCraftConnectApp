@@ -1,7 +1,9 @@
 import os
 
 import whisper
-from flask import Flask, request, jsonify
+import pytesseract
+from PIL import Image
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -19,7 +21,7 @@ def transcribe_file():
         file.save(os.path.join(RECORDINGS_PATH, file.filename))
 
         # Print transcription:
-        model = whisper.load_model("base")
+        model = whisper.load_model("large")
         result = model.transcribe(os.path.join(RECORDINGS_PATH, file.filename))
         transcription = result["text"]
 
@@ -33,6 +35,14 @@ def transcribe_file():
     else:
         return 'Invalid file format. Please upload a .webm file.'
 
+@app.route('/ocr', methods=['POST'])
+def ocr():
+    image = request.files['image']
+    try:
+        text = pytesseract.image_to_string(image)
+        return jsonify({'text': text})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,9 +1,18 @@
 import { useState } from "react";
+
 import {
   getBulletPointList,
   getDescriptionSentence,
   translateText,
+  getAudioTranscription,
 } from "./services/axiosService";
+
+// dont check for types
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
+// Check quick-start docs here: https://www.npmjs.com/package/react-audio-voice-recorder
+
 import "./App.css";
 import { ChakraProvider, extendBaseTheme } from '@chakra-ui/react';
 import chakraTheme from '@chakra-ui/theme'
@@ -23,9 +32,35 @@ function App() {
   const [wholeText, setWholetext] = useState("Unfilled");
   const [bulletList, setBulletList] = useState("Unfilled");
 
+  const [audioFile, setAudioFile] = useState("");
+
+  const recorderControls = useAudioRecorder();
+  const addAudioElement = (blob: Blob) => {
+    const url = URL.createObjectURL(blob);
+    const audio = document.createElement("audio");
+    audio.src = url;
+    audio.controls = true;
+
+    setAudioFile(url);
+    console.log("File was set");
+    document.body.appendChild(audio);
+  };
+
+  const transcribeAudio = () => {
+    getAudioTranscription(audioFile)
+      .then((response) => {
+        console.log("Transcription response: ", response);
+        handleSubmit(response.data.transcirption);
+      })
+      .catch((error) => {
+        console.log("error in frontend: ", error);
+      });
+  };
+
   const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
     event.preventDefault();
     console.log("submitting text: ", textAreaValue);
+
     setDescriptionSentence("Loading...");
     getDescriptionSentence(textAreaValue)
       .then((response) => {
@@ -52,10 +87,9 @@ function App() {
     setWholetext("Loading...");
     translateText(textAreaValue)
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         setWholetext(
           response.data.message ? response.data.message : "Error in response"
-          
         );
       })
       .catch((error) => {
