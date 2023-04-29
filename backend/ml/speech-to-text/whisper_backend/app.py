@@ -26,6 +26,8 @@ def transcribe_file():
         result = model.transcribe(os.path.join(RECORDINGS_PATH, file.filename))
         transcription = result["text"]
 
+        print(transcription)
+
         response = jsonify({'transcription': transcription})
         response.headers.add('Access-Control-Allow-Origin', '*')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
