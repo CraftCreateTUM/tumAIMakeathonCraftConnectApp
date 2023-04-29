@@ -1,4 +1,5 @@
 import os
+from PIL import Image
 
 import whisper
 import pytesseract
@@ -38,6 +39,13 @@ def transcribe_file():
 @app.route('/ocr', methods=['POST'])
 def ocr():
     image = request.files['image']
+    if image:
+        if not os.path.exists(RECORDINGS_PATH):
+            os.makedirs(RECORDINGS_PATH)
+        image.save(os.path.join(RECORDINGS_PATH, image.filename))
+        print("Image saved at: ", os.path.join(RECORDINGS_PATH, image.filename))
+    
+    image = Image.open(os.path.join(RECORDINGS_PATH, image.filename))
     try:
         text = pytesseract.image_to_string(image)
         return jsonify({'text': text})
