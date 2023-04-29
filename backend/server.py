@@ -8,6 +8,10 @@ from translate.translate import translate_text
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def index():
+    return 'This is the backend for Craft Connect.'
+
 @app.route('/bullet_points', methods=['POST'])
 def bullet_points():
     try:
