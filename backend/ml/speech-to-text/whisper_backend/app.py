@@ -1,11 +1,10 @@
 import os
-from PIL import Image
 
-import whisper
 import pytesseract
-from PIL import Image
+import whisper
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from PIL import Image
 from pyngrok import ngrok
 
 app = Flask(__name__)
@@ -23,9 +22,11 @@ def transcribe_file():
         file.save(os.path.join(RECORDINGS_PATH, file.filename))
 
         # Print transcription:
-        model = whisper.load_model("large")
+        model = whisper.load_model("small")
         result = model.transcribe(os.path.join(RECORDINGS_PATH, file.filename))
         transcription = result["text"]
+
+        print(transcription)
 
         response = jsonify({'transcription': transcription})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -37,6 +38,7 @@ def transcribe_file():
     else:
         return 'Invalid file format. Please upload a .webm file.'
 
+
 @app.route('/ocr', methods=['POST'])
 def ocr():
     image = request.files['image']
@@ -44,8 +46,9 @@ def ocr():
         if not os.path.exists(RECORDINGS_PATH):
             os.makedirs(RECORDINGS_PATH)
         image.save(os.path.join(RECORDINGS_PATH, image.filename))
-        print("Image saved at: ", os.path.join(RECORDINGS_PATH, image.filename))
-    
+        print("Image saved at: ", os.path.join(
+            RECORDINGS_PATH, image.filename))
+
     image = Image.open(os.path.join(RECORDINGS_PATH, image.filename))
     try:
         text = pytesseract.image_to_string(image)
@@ -53,10 +56,6 @@ def ocr():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+
 if __name__ == '__main__':
-    # app.run(ssl_context=(
-    #             "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/key.pem",
-    #             "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/cert.pem"
-    #             )
-    #     )
-    app.run(ssl_context='adhoc')
+    app.run()

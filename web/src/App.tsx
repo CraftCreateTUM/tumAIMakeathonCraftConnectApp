@@ -56,8 +56,9 @@ function App() {
   const transcribeAudio = () => {
     getAudioTranscription(audioFile)
       .then((response) => {
+        setShowTextReportBox(true);
         console.log("Transcription response: ", response);
-        handleSubmit(response.data.transcirption);
+        setTextAreaValue(response.data.transcription);
       })
       .catch((error) => {
         console.log("error in frontend: ", error);
