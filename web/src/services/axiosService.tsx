@@ -16,3 +16,17 @@ export const postTextReport = (report: string) => {
     message: report,
   });
 };
+
+export const getBulletPointList = (bulletPointList: string) => {
+  return axiosInstance.post("/bullet_points", {
+    message: bulletPointList,
+  });
+}
+
+export const getDescriptionSentence = (summary: string) => {
+  return axiosInstance.post("/description_sentence", {
+    message: summary,
+  });
+}
+
+

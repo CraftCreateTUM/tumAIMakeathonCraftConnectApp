@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postTextReport } from "./services/axiosService";
+import { postTextReport, getBulletPointList } from "./services/axiosService";
 import "./App.css";
 
 function App() {
@@ -11,6 +11,20 @@ function App() {
   const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
     event.preventDefault();
     console.log("submitting text: ", textAreaValue);
+
+    getBulletPointList(textAreaValue).then((response) => {
+      setReportText(response.data.message ? response.data.message : "Error in response");
+      }).catch((error) => {
+      console.log("error in frontend: ", error);
+    });
+
+    getBulletPointList(textAreaValue).then((response) => {
+      setReportText(response.data.message ? response.data.message : "Error in response");
+      }).catch((error) => {
+      console.log("error in frontend: ", error);
+    });
+
+
     // send text area respons to backend
     postTextReport(textAreaValue)
       .then((response) => {
