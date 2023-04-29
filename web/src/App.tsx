@@ -15,7 +15,7 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 // Check quick-start docs here: https://www.npmjs.com/package/react-audio-voice-recorder
 
 import "./App.css";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Tooltip } from "@chakra-ui/react";
 // import chakraTheme from "@chakra-ui/theme";
 import {
   Button,
@@ -25,16 +25,18 @@ import {
   IconButton,
   Box,
   Textarea,
+  FormControl,
 } from "@chakra-ui/react";
 
-import { ChatIcon } from "@chakra-ui/icons";
-import { FaCamera } from "react-icons/fa";
+import { ChatIcon, CheckIcon } from "@chakra-ui/icons";
+
+import { FaCamera, FaPause } from "react-icons/fa";
 // import CameraComponent from "./camera";
 
 // import { FaMicrophone } from "react-icons/fa";
 
 function App() {
-  const [showReportSurvey, setShowReportSurvey] = useState(false);
+  //const [showReportSurvey, setShowReportSurvey] = useState(True);
   const [showTextReportBox, setShowTextReportBox] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
   const [descriptionSentence, setDescriptionSentence] = useState("Unfilled");
@@ -149,7 +151,7 @@ function App() {
         window.open(fileURL);
 
         // reset all states
-        setShowReportSurvey(false);
+
         setShowTextReportBox(false);
         setTextAreaValue("");
         setDescriptionSentence("Unfilled");
@@ -163,23 +165,13 @@ function App() {
   };
 
   return (
-    <ChakraProvider>
-      <Center>
-        <Stack>
-          <Center>
-            <Heading>Craft Connect</Heading>
-          </Center>
-          <Button
-            width={"100%"}
-            colorScheme="blue"
-            onClick={() => {
-              setShowReportSurvey(!showReportSurvey);
-            }}
-          >
-            Create new report
-          </Button>
-
-          {showReportSurvey && (
+    <Box bg="#189AB4">
+      <ChakraProvider>
+        <Center>
+          <Stack>
+            <Center>
+              <Heading color="lightblue">Craft Connect</Heading>
+            </Center>
             <div>
               <Box
                 borderRadius="md"
@@ -259,65 +251,83 @@ function App() {
 
               <div>
                 <Center>
+                  <Tooltip label="Click this to input text">
+                    <IconButton
+                      onDragOver={() => {
+                        "Click this to input text";
+                      }}
+                      aria-label="Open chat"
+                      rounded={"full"}
+                      icon={<ChatIcon />}
+                      onClick={() => {
+                        setShowTextReportBox(!showTextReportBox);
+                      }}
+                    />
+                  </Tooltip>
+                  <CameraComponent onCapture={startOcr} />
                   <IconButton
                     aria-label="Open chat"
-                    icon={<ChatIcon />}
-                    onClick={() => {
-                      setShowTextReportBox(!showTextReportBox);
-                    }}
-                  />
-                  <IconButton
-                    aria-label="Open chat"
+                    rounded={"full"}
                     icon={<FaCamera />}
                     onClick={() => {
                       startOcr();
                     }}
                   />
-                  <Button
-                    className="transcribe-button"
-                    onClick={transcribeAudio}
-                  >
-                    Transcribe audio
-                  </Button>
+                  <IconButton
+                    aria-label="Open chat"
+                    rounded={"full"}
+                    icon={<CheckIcon />}
+                    onClick={() => {
+                      transcribeAudio;
+                    }}
+                  />
 
-                  <div>
-                    <AudioRecorder
-                      onRecordingComplete={(blob: Blob) =>
-                        addAudioElement(blob)
-                      }
-                      recorderControls={recorderControls}
-                    />
-                    <br />
-                    <Button onClick={recorderControls.stopRecording}>
-                      Stop recording
-                    </Button>
-                    <br />
-                  </div>
+                  <AudioRecorder
+                    onRecordingComplete={(blob: Blob) => addAudioElement(blob)}
+                    recorderControls={recorderControls}
+                  />
+                  <br />
+
+                  <IconButton
+                    aria-label="Open chat"
+                    rounded={"full"}
+                    icon={<FaPause />}
+                    onClick={() => {
+                      recorderControls.stopRecording;
+                    }}
+                  />
+
+                  <br />
                 </Center>
               </div>
               {showTextReportBox && (
                 // align on top of each other
                 <Box>
-                  <p>What have you done today?</p>
-                  <form onSubmit={handleSubmit}>
+                  <Heading as="h2" size="md">
+                    Describe your day
+                  </Heading>
+                  <FormControl onSubmit={handleSubmit}>
                     <Textarea
                       value={textAreaValue}
                       onChange={handleTextAreaChange}
                     ></Textarea>
                     <Box>
-                      <button type="submit" className="report-button">
+                      <Button
+                        colorScheme="green"
+                        type="submit"
+                        className="report-button"
+                      >
                         Submit
-                      </button>
+                      </Button>
                     </Box>
-                  </form>
+                  </FormControl>
                 </Box>
               )}
             </div>
-          )}
-        </Stack>
-      </Center>
-    </ChakraProvider>
+          </Stack>
+        </Center>
+      </ChakraProvider>
+    </Box>
   );
 }
-
 export default App;
