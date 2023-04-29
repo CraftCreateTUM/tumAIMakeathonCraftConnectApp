@@ -37,7 +37,7 @@ export const translateText = (text: string) => {
 
 const transcriptionInstance = axios.create({
   baseURL: "http://104.155.22.46:5000",
-  timeout: 10000,
+  timeout: 45000,
   headers: {
     Accept: "application/json",
     "Content-Type": "multipart/form-data",
