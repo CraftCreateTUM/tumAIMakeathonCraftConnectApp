@@ -28,7 +28,7 @@ import {
 } from "@chakra-ui/react";
 
 import { ChatIcon } from "@chakra-ui/icons";
-import { FaCamera, FaPause } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 
 // import { FaMicrophone } from "react-icons/fa";
 
