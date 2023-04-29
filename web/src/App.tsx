@@ -170,7 +170,9 @@ function App() {
         <Center>
           <Stack>
             <Center>
-              <Heading color="lightblue">Craft Connect</Heading>
+              <Box style={{ marginTop: "2em" }}>
+                <Heading color="white">Craft Connect</Heading>
+              </Box>
             </Center>
             <div>
               <Box
@@ -180,92 +182,8 @@ function App() {
                   width: "100%",
                   backgroundColor: "#e9e9e9",
                 }}
-              >
-                <div style={{ marginLeft: "3px", marginTop: "6px" }}>
-                  <Center>
-                    <Heading
-                      as="h2"
-                      size="lg"
-                      style={{
-                        marginBottom: "5px",
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                      }}
-                    >
-                      Current input{" "}
-                    </Heading>
-                  </Center>
-
-                  <Box
-                    overflow="auto"
-                    overflowY="hidden"
-                    style={{ height: "75%", width: "100%" }}
-                    as="p"
-                    fontSize="xs"
-                    fontWeight="bold"
-                    color="black"
-                  >
-                    <Heading as="h4" size="md">
-                      {" "}
-                      Description{" "}
-                    </Heading>
-                    <Box
-                      overflow="auto"
-                      overflowY="hidden"
-                      style={{ height: "75%", width: "100%" }}
-                      as="p"
-                      fontSize="xs"
-                      fontWeight="bold"
-                      color="black"
-                    ></Box>
-                    {descriptionSentence}
-                  </Box>
-
-                  <Stack>
-                    <Heading as="h4" size="md">
-                      {" "}
-                      Reason{" "}
-                    </Heading>
-                    <Stack>
-                      <Box
-                        overflowY="scroll"
-                        style={{ height: "75%", width: "100%" }}
-                        as="p"
-                        fontSize="xs"
-                        fontWeight="bold"
-                        color="black"
-                      >
-                        {wholeText}
-                      </Box>
-                    </Stack>
-                  </Stack>
-
-                  <Heading as="h4" size="md">
-                    {" "}
-                    List{" "}
-                  </Heading>
-                  <Box
-                    overflowY="scroll"
-                    style={{ height: "75%", width: "100%" }}
-                    as="p"
-                    fontSize="xs"
-                    fontWeight="bold"
-                    color="black"
-                  >
-                    {bulletList}
-                  </Box>
-                  {pdfReadyToBeMade && (
-                    <Button
-                      colorScheme="blue"
-                      onClick={handlePdfDownloading}
-                      style={{ marginTop: "3px" }}
-                    >
-                      Download PDF
-                    </Button>
-                  )}
-                </div>
-              </Box>
-              <Center>
+              ></Box>
+              <Center style={{ marginBottom: "0.3em" }}>
                 <Heading size="md">Choose input source</Heading>
               </Center>
               <div>
@@ -280,6 +198,7 @@ function App() {
                     onClick={() => {
                       setShowTextReportBox(!showTextReportBox);
                     }}
+                    style={{ margin: "1em" }}
                   />
 
                   <IconButton
@@ -289,55 +208,150 @@ function App() {
                     onClick={() => {
                       startOcr();
                     }}
+                    style={{ margin: "1em" }}
                   />
-                  <Button
-                    className="transcribe-button"
-                    onClick={transcribeAudio}
-                  >
-                    Transcribe audio
-                  </Button>
-                  <AudioRecorder
-                    onRecordingComplete={(blob: Blob) => addAudioElement(blob)}
-                    recorderControls={recorderControls}
-                  />
-                  <br />
-                  {/*<IconButton
-                    aria-label="Open chat"
-                    rounded={"full"}
-                    icon={<FaPause />}
-                    onClick={() => {
-                      recorderControls.stopRecording;
+                  <Box style={{ margin: "1em" }}>
+                    <AudioRecorder
+                      onRecordingComplete={(blob: Blob) =>
+                        addAudioElement(blob)
+                      }
+                      recorderControls={recorderControls}
+                    />
+                  </Box>
+                </Center>
+                {showTextReportBox && (
+                  // align on top of each other
+                  <Center>
+                    <Box style={{ marginLeft: "1em" }}>
+                      <Heading
+                        size="md"
+                        style={{ marginBottom: "1em", marginTop: "1em" }}
+                      >
+                        {" "}
+                        What have you done today?
+                      </Heading>
+                      <FormControl onSubmit={handleSubmit}>
+                        <Textarea
+                          value={textAreaValue}
+                          onChange={handleTextAreaChange}
+                          placeholder="Please write here..."
+                          style={{ backgroundColor: "white" }}
+                        ></Textarea>
+
+                        <Box style={{ marginTop: "1em" }}>
+                          <Button
+                            colorScheme="green"
+                            type="submit"
+                            className="report-button"
+                            onClick={handleSubmit}
+                          >
+                            Submit
+                          </Button>
+                        </Box>
+                      </FormControl>
+                    </Box>
+                  </Center>
+                )}
+              </div>
+            </div>
+
+            {pdfReadyToBeMade && (
+              <div style={{ marginTop: "1em" }}>
+                <Center>
+                  <Heading
+                    as="h2"
+                    size="md"
+                    style={{
+                      marginBottom: "5px",
+                      marginLeft: "5px",
+                      marginRight: "5px",
                     }}
-                  />
-                  */}
-                  <br />
+                  >
+                    Preview of PDF
+                  </Heading>
+                </Center>
+                <Box
+                  borderRadius="md"
+                  style={{
+                    height: "75%",
+                    width: "100%",
+                    backgroundColor: "#e9e9e9",
+                  }}
+                >
+                  <Box style={{ padding: "0.8em" }}>
+                    <div style={{ marginLeft: "3px", marginTop: "6px" }}>
+                      <Box
+                        overflow="auto"
+                        overflowY="hidden"
+                        style={{ height: "75%", width: "100%" }}
+                        as="p"
+                        fontSize="xs"
+                        fontWeight="bold"
+                        color="black"
+                      >
+                        <Heading as="h4" size="md">
+                          {" "}
+                          Description{" "}
+                        </Heading>
+                        <Box
+                          overflow="auto"
+                          overflowY="hidden"
+                          style={{ height: "75%", width: "100%" }}
+                          as="p"
+                          fontSize="xs"
+                          fontWeight="bold"
+                          color="black"
+                        ></Box>
+                        {descriptionSentence}
+                      </Box>
+
+                      <Stack>
+                        <Heading as="h4" size="md">
+                          {" "}
+                          Reason{" "}
+                        </Heading>
+                        <Stack>
+                          <Box
+                            overflowY="scroll"
+                            style={{ height: "75%", width: "100%" }}
+                            as="p"
+                            fontSize="xs"
+                            fontWeight="bold"
+                            color="black"
+                          >
+                            {wholeText}
+                          </Box>
+                        </Stack>
+                      </Stack>
+
+                      <Heading as="h4" size="md">
+                        {" "}
+                        List{" "}
+                      </Heading>
+                      <Box
+                        overflowY="scroll"
+                        style={{ height: "75%", width: "100%" }}
+                        as="p"
+                        fontSize="xs"
+                        fontWeight="bold"
+                        color="black"
+                      >
+                        {bulletList}
+                      </Box>
+                    </div>
+                  </Box>
+                </Box>
+                <Center>
+                  <Button
+                    colorScheme="red"
+                    onClick={handlePdfDownloading}
+                    style={{ marginTop: "1em" }}
+                  >
+                    Download PDF
+                  </Button>
                 </Center>
               </div>
-              {showTextReportBox && (
-                // align on top of each other
-                <Box>
-                  <Heading as="h2" size="md">
-                    Describe your day
-                  </Heading>
-                  <FormControl onSubmit={handleSubmit}>
-                    <Textarea
-                      value={textAreaValue}
-                      onChange={handleTextAreaChange}
-                    ></Textarea>
-                    <Box>
-                      <Button
-                        colorScheme="green"
-                        type="submit"
-                        className="report-button"
-                        onClick={handleSubmit}
-                      >
-                        Submit
-                      </Button>
-                    </Box>
-                  </FormControl>
-                </Box>
-              )}
-            </div>
+            )}
           </Stack>
         </Center>
       </ChakraProvider>
