@@ -26,7 +26,6 @@ import {
   Box,
   Textarea,
   FormControl,
-  
 } from "@chakra-ui/react";
 
 import { ChatIcon, CheckIcon } from "@chakra-ui/icons";
@@ -151,7 +150,7 @@ function App() {
         window.open(fileURL);
 
         // reset all states
-        
+
         setShowTextReportBox(false);
         setTextAreaValue("");
         setDescriptionSentence("Unfilled");
@@ -165,67 +164,71 @@ function App() {
   };
 
   return (
-    <Box bg="#189AB4">
+    <Box bg="#189AB4" h="100vh">
       <ChakraProvider>
         <Center>
           <Stack>
             <Center>
               <Heading color="lightblue">Craft Connect</Heading>
             </Center>
-              <div>
-                <Box
-                  borderRadius="md"
-                  style={{
-                    height: "75%",
-                    width: "100%",
-                    backgroundColor: "#e9e9e9",
-                  }}
-                >
-                  <div style={{ marginLeft: "3px", marginTop: "6px" }}>
-                    <Center>
-                      <Heading
-                        as="h2"
-                        size="lg"
-                        style={{ marginBottom: "3px" }}
-                      >
-                        Status of work{" "}
-                      </Heading>
-                    </Center>
+            <div>
+              <Box
+                borderRadius="md"
+                style={{
+                  height: "75%",
+                  width: "100%",
+                  backgroundColor: "#e9e9e9",
+                }}
+              >
+                <div style={{ marginLeft: "3px", marginTop: "6px" }}>
+                  <Center>
+                    <Heading
+                      as="h2"
+                      size="lg"
+                      style={{
+                        marginBottom: "5px",
+                        marginLeft: "5px",
+                        marginRight: "5px",
+                      }}
+                    >
+                      Current input {" "}
+                    </Heading>
+                  </Center>
+
+                  <Box
+                    overflow="auto"
+                    overflowY="hidden"
+                    style={{ height: "75%", width: "100%" }}
+                    as="p"
+                    fontSize="xs"
+                    fontWeight="bold"
+                    color="black"
+                  >
+                    <Heading as="h4" size="md">
+                      {" "}
+                      Description{" "}
+                    </Heading>
+
+                    {descriptionSentence}
+                  </Box>
+
+                  <Stack>
+                    <Heading as="h4" size="md">
+                      {" "}
+                      Reason{" "}
+                    </Heading>
 
                     <Box
-                      overflow="auto"
-                      overflowY="hidden"
+                      overflowY="scroll"
                       style={{ height: "75%", width: "100%" }}
                       as="p"
                       fontSize="xs"
                       fontWeight="bold"
                       color="black"
                     >
-                      <Heading as="h4" size="md">
-                        {" "}
-                        Description{" "}
-                      </Heading>
-
-                      {descriptionSentence}
+                      {wholeText}
                     </Box>
-
-                    <Stack>
-                      <Heading as="h4" size="md">
-                        {" "}
-                        Reason{" "}
-                      </Heading>
-
-                      <Box
-                        overflowY="scroll"
-                        style={{ height: "75%", width: "100%" }}
-                        as="p"
-                        fontSize="xs"
-                        fontWeight="bold"
-                        color="black"
-                      >
-                        {wholeText}
-                      </Box>
-                    </Stack>
+                  </Stack>
 
                   <Heading as="h4" size="md">
                     {" "}
@@ -252,84 +255,80 @@ function App() {
                   )}
                 </div>
               </Box>
-
-                <div>
-                  <Center>
-                    <Tooltip label="Click this to input text">
-                    <IconButton
-                      onDragOver={() => {"Click this to input text"}}
-                      aria-label="Open chat"
-                      rounded={"full"}
-                      icon={<ChatIcon />}
-                      onClick={() => {
-                        setShowTextReportBox(!showTextReportBox);
-                      }}
-                    />
-                    </Tooltip>
-                    <CameraComponent onCapture={startOcr} />
+              <Center>
+              <Heading size="md">Choose input source</Heading>
+              </Center>
+              <div>
+                <Center>
                   <IconButton
-                   
-                      aria-label="Open chat"
-                      rounded={"full"}
-                      icon={<FaCamera />}
-                      onClick={() => {
-                        startOcr()
-                      }}
-                    />
-                    <IconButton
-                      aria-label="Open chat"
-                      rounded={"full"}
-                      icon={<CheckIcon />}
-                      onClick={() => {
-                        transcribeAudio;
-                      }}
-                    />
+                    onDragOver={() => {
+                      "Click this to input text";
+                    }}
+                    aria-label="Open chat"
+                    rounded={"full"}
+                    icon={<ChatIcon />}
+                    onClick={() => {
+                      setShowTextReportBox(!showTextReportBox);
+                    }}
+                  />
 
-                    <AudioRecorder 
-                      onRecordingComplete={(blob: Blob) =>
-                        addAudioElement(blob)
-                      }
-                      recorderControls={recorderControls}
-                    />
-                    <br />
-
-                    <IconButton
-                      aria-label="Open chat"
-                      rounded={"full"}
-                      icon={<FaPause />}
-                      onClick={() => {
-                        recorderControls.stopRecording;
-                      }}
-                    />
-
-                    <br />
-                  </Center>
-                </div>
-                {showTextReportBox && (
-                  // align on top of each other
-                  <Box>
-                    <Heading as="h2" size="md">
-                      Describe your day
-                    </Heading>
-                    <FormControl onSubmit={handleSubmit}>
-                      <Textarea
-                        value={textAreaValue}
-                        onChange={handleTextAreaChange}
-                      ></Textarea>
-                      <Box>
-                        <Button
-                          colorScheme="green"
-                          type="submit"
-                          className="report-button"
-                        >
-                          Submit
-                        </Button>
-                      </Box>
-                    </FormControl>
-                  </Box>
-                )}
+                  <IconButton
+                    aria-label="Open chat"
+                    rounded={"full"}
+                    icon={<FaCamera />}
+                    onClick={() => {
+                      startOcr();
+                    }}
+                  />
+                  <Button
+                    className="transcribe-button"
+                    onClick={transcribeAudio}
+                  >
+                    Transcribe audio
+                  </Button>
+                  <AudioRecorder
+                    onRecordingComplete={(blob: Blob) => addAudioElement(blob)}
+                    recorderControls={recorderControls}
+                  />
+                  <br />
+                  {/*<IconButton
+                    aria-label="Open chat"
+                    rounded={"full"}
+                    icon={<FaPause />}
+                    onClick={() => {
+                      recorderControls.stopRecording;
+                    }}
+                  />
+                  */}
+                  <br />
+                </Center>
               </div>
-            
+              {showTextReportBox && (
+                // align on top of each other
+                <Box>
+                  <Heading as="h2" size="md">
+                    Describe your day
+                  </Heading>
+                  <FormControl onSubmit={handleSubmit}>
+                    <Textarea
+                      value={textAreaValue}
+                      onChange={handleTextAreaChange}
+                    ></Textarea>
+                    <Box>
+                      <Button
+                        colorScheme="green"
+                        type="submit"
+                        className="report-button"
+                        onClick={handleSubmit}
+                      >
+                      
+                        Submit
+                      </Button>
+                    </Box>
+                  </FormControl>
+                </Box>
+              )}
+            </div>
           </Stack>
         </Center>
       </ChakraProvider>
