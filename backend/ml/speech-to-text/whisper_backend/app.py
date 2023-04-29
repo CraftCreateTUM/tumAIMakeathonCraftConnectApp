@@ -6,6 +6,7 @@ import pytesseract
 from PIL import Image
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from pyngrok import ngrok
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -53,4 +54,6 @@ def ocr():
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    public_url = ngrok.connect(5000, bind_tls=True)
+    print("Public URL:", public_url)
+    app.run(host="0.0.0.0", port=5000)
