@@ -5,6 +5,7 @@ import {
   getDescriptionSentence,
   translateText,
   getAudioTranscription,
+  getPdfFromServer,
 } from "./services/axiosService";
 
 // dont check for types
@@ -27,7 +28,7 @@ import {
 } from "@chakra-ui/react";
 
 import { ChatIcon } from "@chakra-ui/icons";
-import { FaCamera, FaPause } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 
 // import { FaMicrophone } from "react-icons/fa";
 
@@ -38,6 +39,7 @@ function App() {
   const [descriptionSentence, setDescriptionSentence] = useState("Unfilled");
   const [wholeText, setWholetext] = useState("Unfilled");
   const [bulletList, setBulletList] = useState("Unfilled");
+  const [pdfReadyToBeMade, setPdfReadyToBeMade] = useState(false);
 
   const [audioFile, setAudioFile] = useState("");
 
@@ -112,13 +114,51 @@ function App() {
     setTextAreaValue("");
 
     // close text report box
-    setShowTextReportBox(!setShowTextReportBox);
+    setShowTextReportBox(false);
+
+    // set pdf ready to be made
+    setPdfReadyToBeMade(true);
   };
 
   const handleTextAreaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ): void => {
     setTextAreaValue(event.target.value);
+  };
+
+  const handlePdfDownloading = () => {
+    getPdfFromServer({
+      name: "Jan Meyer",
+      company: "electrovolt",
+      location: "Bayern, Germany",
+      codeWordEquipment: "0203030401",
+      descriptionnumber: "0203030401",
+      description: descriptionSentence,
+      servicenumber: "123456789",
+      jobdescription: wholeText,
+      dotlist: bulletList,
+      date: new Date().toISOString().split("T")[0].toString(),
+    })
+      .then((response) => {
+        // open pdf in new tab
+        const file = new Blob([response.data], {
+          type: "application/pdf;base64",
+        });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+
+        // reset all states
+        setShowReportSurvey(false);
+        setShowTextReportBox(false);
+        setTextAreaValue("");
+        setDescriptionSentence("Unfilled");
+        setWholetext("Unfilled");
+        setBulletList("Unfilled");
+        setPdfReadyToBeMade(false);
+      })
+      .catch((error) => {
+        console.log("error in pdf: ", error);
+      });
   };
 
   return (
@@ -204,6 +244,15 @@ function App() {
                   >
                     {bulletList}
                   </Box>
+                  {pdfReadyToBeMade && (
+                    <Button
+                      colorScheme="blue"
+                      onClick={handlePdfDownloading}
+                      style={{ marginTop: "3px" }}
+                    >
+                      Download PDF
+                    </Button>
+                  )}
                 </div>
               </Box>
 

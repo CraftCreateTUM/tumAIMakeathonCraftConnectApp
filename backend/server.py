@@ -30,7 +30,7 @@ def description_sentence():
 def return_files_tut():
     path = return_pdf(request.get_json())
     try:
-        return send_file(path, attachment_filename='report.pdf')
+        return send_file(path)
     except Exception as e:
         return str(e)
 

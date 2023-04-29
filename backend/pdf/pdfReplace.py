@@ -42,15 +42,24 @@ def process_data(data):
 
 # Set up the document
 def createpdf():
-    pdf_path = "./backend/pdf/output/{}.pdf".format(uuid.uuid1())
+
+    # path of current directory
+    current_directory = os.getcwd()
+
+    pdf_path = current_directory + "/pdf/output/{}.pdf".format(uuid.uuid1())
+
+    # create pdf directory if it doesn't exist
+    if not os.path.exists(current_directory + "/pdf/output"):
+        os.makedirs(current_directory + "/pdf/output")
+
     doc = SimpleDocTemplate(pdf_path, pagesize=letter)
     
-    if company == "electrovolt":
-        image = "./backend/pdf/resources/electrovolt.jpg"
-    else:
-        image = "electrovolt2.jpg"
-    img = Image(image, width=150, height=100)
-    elements.append(img)
+    # if company == "electrovolt":
+    #     image = "./backend/pdf/resources/electrovolt.jpg"
+    # else:
+    #     image = "electrovolt2.jpg"
+    # img = Image(image, width=150, height=100)
+    # elements.append(img)
 
 # Add the header
 # Add the header
