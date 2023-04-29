@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { postTextReport, getBulletPointList, getDescriptionSentence} from "./services/axiosService";
+import {
+  postTextReport,
+  getBulletPointList,
+  getDescriptionSentence,
+} from "./services/axiosService";
 import "./App.css";
 
 function App() {
@@ -9,24 +13,31 @@ function App() {
   const [descriptionSentence, setDescriptionSentence] = useState("Unfilled");
   const [wholeText, setWholetext] = useState("Unfilled");
   const [bulletList, setBulletList] = useState("Unfilled");
-  
 
   const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
     event.preventDefault();
     console.log("submitting text: ", textAreaValue);
     setDescriptionSentence("Loading...");
-    getDescriptionSentence(textAreaValue).then((response) => {
-      setDescriptionSentence(response.data.message ? response.data.message : "Error in response");
-      }).catch((error) => {
-      console.log("error in frontend: ", error);
-    });
+    getDescriptionSentence(textAreaValue)
+      .then((response) => {
+        setDescriptionSentence(
+          response.data.message ? response.data.message : "Error in response"
+        );
+      })
+      .catch((error) => {
+        console.log("error in frontend: ", error);
+      });
     setBulletList("Loading...");
-    getBulletPointList(textAreaValue).then((response) => {
-      setBulletList(response.data.message ? response.data.message : "Error in response");
-      //setWholetext(response.data.message ? response.data.message : "Error in response");
-      }).catch((error) => {
-      console.log("error in frontend: ", error);
-    });
+    getBulletPointList(textAreaValue)
+      .then((response) => {
+        setBulletList(
+          response.data.message ? response.data.message : "Error in response"
+        );
+        //setWholetext(response.data.message ? response.data.message : "Error in response");
+      })
+      .catch((error) => {
+        console.log("error in frontend: ", error);
+      });
 
     // send text area respons to backend
     setWholetext("Loading...");

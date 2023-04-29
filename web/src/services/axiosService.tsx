@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create axios instance
 const axiosInstance = axios.create({
-  baseURL: "http://127.0.0.1:5000",
+  baseURL: "https://craft-connect-api-xztl4.ondigitalocean.app",
   timeout: 100000,
   headers: {
     "Content-Type": "application/json",
@@ -21,12 +21,10 @@ export const getBulletPointList = (bulletPointList: string) => {
   return axiosInstance.post("/bullet_points", {
     message: bulletPointList,
   });
-}
+};
 
 export const getDescriptionSentence = (summary: string) => {
   return axiosInstance.post("/description_sentence", {
     message: summary,
   });
-}
-
-
+};
