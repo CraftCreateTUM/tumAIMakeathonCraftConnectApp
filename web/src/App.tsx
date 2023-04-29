@@ -218,12 +218,7 @@ function App() {
                     fontWeight="bold"
                     color="black"
                   >
-                    <Heading as="h4" size="md">
-                      {" "}
-                      Description{" "}
-                    </Heading>
-
-                    {descriptionSentence}
+                
                   </Box>
                     {descriptionSentence}
                   </Box>
@@ -234,10 +229,7 @@ function App() {
                       Reason{" "}
                     </Heading>
                   <Stack>
-                    <Heading as="h4" size="md">
-                      {" "}
-                      Reason{" "}
-                    </Heading>
+                   
 
                     <Box
                       overflowY="scroll"
@@ -250,16 +242,8 @@ function App() {
                       {wholeText}
                     </Box>
                   </Stack>
-                    <Box
-                      overflowY="scroll"
-                      style={{ height: "75%", width: "100%" }}
-                      as="p"
-                      fontSize="xs"
-                      fontWeight="bold"
-                      color="black"
-                    >
-                      {wholeText}
-                    </Box>
+                  
+                    
                   </Stack>
 
                   <Heading as="h4" size="md">
@@ -351,6 +335,7 @@ function App() {
                         colorScheme="green"
                         type="submit"
                         className="report-button"
+                        onClick={handleSubmit}
                         
                       >
                       
