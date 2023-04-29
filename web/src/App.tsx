@@ -5,6 +5,15 @@ import {
   translateText,
 } from "./services/axiosService";
 import "./App.css";
+import { ChakraProvider, extendBaseTheme } from '@chakra-ui/react';
+import chakraTheme from '@chakra-ui/theme'
+import { Button, Heading, ButtonGroup, Center, Stack, IconButton, Box, Textarea} from '@chakra-ui/react'
+import { ChatIcon } from '@chakra-ui/icons'
+import { FaCamera } from 'react-icons/fa';
+import { FaMicrophone } from 'react-icons/fa';
+
+
+
 
 function App() {
   const [showReportSurvey, setShowReportSurvey] = useState(false);
@@ -61,61 +70,87 @@ function App() {
   };
 
   return (
-    <>
-      <h2>Craft Connect</h2>
-      <button
-        onClick={() => {
+    <ChakraProvider>
+      <Box bg="#9AE6B4">
+      <Center>
+      <Stack>
+      <Heading>Craft Connect</Heading>
+      <Button colorScheme='blue' onClick={() => {
           setShowReportSurvey(!showReportSurvey);
-        }}
-      >
+        }}>
         Create new report
-      </button>
+      </Button>
+      
       {showReportSurvey && (
         <div>
-          <div style={{ height: 300, width: 200, backgroundColor: "#e9e9e9" }}>
+          <Box borderRadius="md" style={{ height: 300, width: 230, backgroundColor: "#e9e9e9" }}>
             <div style={{ marginLeft: "3px", marginTop: "6px" }}>
-              <h5 style={{ marginBottom: "3px" }}>Status of work: </h5>
-              <p>{descriptionSentence.slice(0, 50) + "..."}</p>
-              <p>{wholeText.slice(0, 50) + "..."}</p>
-              <p>{bulletList.slice(0, 50) + "..."}</p>
+              <Center>
+              <Heading  as="h3" size="md" style={{ marginBottom: "3px" }}>Status of work </Heading>
+              </Center>
+              <Box as="p" fontSize="xs" fontWeight="bold" color="black">
+                <Heading as="h4" size="md"> Description </Heading>
+              {descriptionSentence.slice(0,100) + "..."}
+              </Box>
+              <Heading as="h4" size="md"> Reason </Heading>
+              <Box as="p" fontSize="xs" fontWeight="bold" color="black">
+              {wholeText.slice(0,100) + "..."}
+              </Box>
+              <Heading as="h4" size="md"> List </Heading>
+              <Box as="p" fontSize="xs" fontWeight="bold" color="black">
+              {bulletList.slice(0,100) + "..."}
+              </Box>
             </div>
-          </div>
+          </Box>
           <div>
-            <button
-              className="report-button"
+          <Center>
+          <IconButton aria-label="Open chat" icon={<ChatIcon />}
+              
               onClick={() => {
                 setShowTextReportBox(!showTextReportBox);
               }}
-            >
-              text
-            </button>
-            <button className="report-button">speech</button>
-            <button className="report-button">image</button>
+            />
+            <IconButton aria-label="Open chat" icon={<FaCamera />}
+              
+              onClick={() => {
+               //Insert function here;
+              }}
+            />
+            <IconButton aria-label="Open chat" icon={<FaMicrophone />}
+              
+              onClick={() => {
+               //Insert function here;
+              }}
+            />
+            </Center>
           </div>
           {showTextReportBox && (
             // align on top of each other
-            <div>
+            <Box>
               <p>What have you done today?</p>
               <form onSubmit={handleSubmit}>
-                <textarea
-                  style={{ height: 100, width: 400 }}
+                <Textarea
                   value={textAreaValue}
                   onChange={(event) => {
                     setTextAreaValue(event.target.value);
                   }}
-                ></textarea>
-                <div>
+                ></Textarea>
+                <Box>
                   <button type="submit" className="report-button">
                     Submit
                   </button>
-                </div>
+                </Box>
               </form>
-            </div>
+            </Box>
           )}
         </div>
       )}
-    </>
+      </Stack>
+      </Center>
+      </Box>
+    </ChakraProvider>
   );
+  
 }
 
 export default App;
