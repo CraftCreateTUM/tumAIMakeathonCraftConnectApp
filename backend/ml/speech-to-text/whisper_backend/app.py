@@ -54,8 +54,9 @@ def ocr():
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(ssl_context=(
-                "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/key.pem",
-                "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/cert.pem"
-                )
-        )
+    # app.run(ssl_context=(
+    #             "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/key.pem",
+    #             "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/cert.pem"
+    #             )
+    #     )
+    app.run(ssl_context='adhoc')
