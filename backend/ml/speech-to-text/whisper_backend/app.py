@@ -56,4 +56,9 @@ def ocr():
 if __name__ == '__main__':
     public_url = ngrok.connect(5000, bind_tls=True)
     print("Public URL:", public_url)
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, 
+            ssl_context=(
+                "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/key.pem",
+                "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/cert.pem"
+                )
+        )
