@@ -91,3 +91,26 @@ export const getAudioTranscription = async (audioUrl: string): Promise<AxiosResp
 
   return result;
 };
+
+export const getOcr = async (image: File | null): Promise<AxiosResponse> => {
+  if (!image) {
+    throw new Error('No image provided');
+  }
+  try {
+    const formData = new FormData();
+    formData.append('image', image!);
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    console.log('Sending image to backend');
+
+    const response = await axios.post('https://christopherschuetz.de:5000/ocr', formData, config);
+    return response;
+  } catch (error: any) {
+    console.error('Error in getOcr function:', error.message);
+    throw error;
+  }
+};

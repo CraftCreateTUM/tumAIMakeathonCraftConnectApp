@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, ChangeEvent } from "react";
 
 import {
   getBulletPointList,
@@ -6,6 +6,7 @@ import {
   translateText,
   getAudioTranscription,
   getPdfFromServer,
+  getOcr,
 } from "./services/axiosService";
 
 // dont check for types
@@ -26,6 +27,7 @@ import {
   Box,
   Textarea,
   FormControl,
+  Input,
 } from "@chakra-ui/react";
 
 import { ChatIcon } from "@chakra-ui/icons";
@@ -44,6 +46,9 @@ function App() {
   const [bulletList, setBulletList] = useState("Unfilled");
   const [pdfReadyToBeMade, setPdfReadyToBeMade] = useState(false);
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageFile, setFile] = useState<File | null>(null);
+
   const [audioFile, setAudioFile] = useState("");
 
   const recorderControls = useAudioRecorder();
@@ -56,10 +61,6 @@ function App() {
     setAudioFile(url);
     console.log("File was set");
     document.body.appendChild(audio);
-  };
-
-  const startOcr = () => {
-    console.log("Starting OCR");
   };
 
   const transcribeAudio = () => {
@@ -122,6 +123,23 @@ function App() {
     // set pdf ready to be made
     setPdfReadyToBeMade(true);
   };
+
+  const handleFileChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      if (!event.target.files) return;
+      setFile(event.target.files[0]);
+      getOcr(event.target.files[0])
+        .then((response) => {
+          setShowTextReportBox(true);
+          console.log(response.data.text);
+          setTextAreaValue(response.data.text);
+        })
+        .catch((error) => {
+          console.log("error in frontend: ", error);
+        });
+    },
+    []
+  );
 
   const handleTextAreaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -342,6 +360,26 @@ function App() {
                   </Box>
                 </Box>
                 <Center>
+                  <IconButton
+                    onDragOver={() => {
+                      "Click this to input text";
+                    }}
+                    aria-label="Open chat"
+                    rounded={"full"}
+                    icon={<ChatIcon />}
+                    onClick={() => {
+                      setShowTextReportBox(!showTextReportBox);
+                    }}
+                  />
+                  <Box>
+                    <Input
+                      type="file"
+                      name="myImage"
+                      borderRadius={20}
+                      onChange={handleFileChange}
+                      accept="image/*"
+                    />
+                  </Box>
                   <Button
                     colorScheme="red"
                     onClick={handlePdfDownloading}
