@@ -28,3 +28,9 @@ export const getDescriptionSentence = (summary: string) => {
     message: summary,
   });
 };
+
+export const translateText = (text: string) => {
+  return axiosInstance.post("/translate", {
+    message: text,
+  });
+};

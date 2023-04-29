@@ -1,8 +1,8 @@
 import { useState } from "react";
 import {
-  postTextReport,
   getBulletPointList,
   getDescriptionSentence,
+  translateText,
 } from "./services/axiosService";
 import "./App.css";
 
@@ -41,11 +41,12 @@ function App() {
 
     // send text area respons to backend
     setWholetext("Loading...");
-    postTextReport(textAreaValue)
+    translateText(textAreaValue)
       .then((response) => {
-        console.log("response message backend: ", response.data.message);
+        console.log(response.data)
         setWholetext(
           response.data.message ? response.data.message : "Error in response"
+          
         );
       })
       .catch((error) => {
