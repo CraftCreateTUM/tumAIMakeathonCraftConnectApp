@@ -1,35 +1,39 @@
 import { useState } from "react";
-import { postTextReport, getBulletPointList } from "./services/axiosService";
+import { postTextReport, getBulletPointList, getDescriptionSentence} from "./services/axiosService";
 import "./App.css";
 
 function App() {
   const [showReportSurvey, setShowReportSurvey] = useState(false);
   const [showTextReportBox, setShowTextReportBox] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
-  const [reportText, setReportText] = useState("Unfilled");
+  const [descriptionSentence, setDescriptionSentence] = useState("Unfilled");
+  const [wholeText, setWholetext] = useState("Unfilled");
+  const [bulletList, setBulletList] = useState("Unfilled");
+  
 
   const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
     event.preventDefault();
     console.log("submitting text: ", textAreaValue);
-
-    getBulletPointList(textAreaValue).then((response) => {
-      setReportText(response.data.message ? response.data.message : "Error in response");
+    setDescriptionSentence("Loading...");
+    getDescriptionSentence(textAreaValue).then((response) => {
+      setDescriptionSentence(response.data.message ? response.data.message : "Error in response");
       }).catch((error) => {
       console.log("error in frontend: ", error);
     });
-
+    setBulletList("Loading...");
     getBulletPointList(textAreaValue).then((response) => {
-      setReportText(response.data.message ? response.data.message : "Error in response");
+      setBulletList(response.data.message ? response.data.message : "Error in response");
+      //setWholetext(response.data.message ? response.data.message : "Error in response");
       }).catch((error) => {
       console.log("error in frontend: ", error);
     });
-
 
     // send text area respons to backend
+    setWholetext("Loading...");
     postTextReport(textAreaValue)
       .then((response) => {
         console.log("response message backend: ", response.data.message);
-        setReportText(
+        setWholetext(
           response.data.message ? response.data.message : "Error in response"
         );
       })
@@ -59,7 +63,9 @@ function App() {
           <div style={{ height: 300, width: 200, backgroundColor: "#e9e9e9" }}>
             <div style={{ marginLeft: "3px", marginTop: "6px" }}>
               <h5 style={{ marginBottom: "3px" }}>Status of work: </h5>
-              <p>{reportText.slice(0, 50) + "..."}</p>
+              <p>{descriptionSentence.slice(0, 50) + "..."}</p>
+              <p>{wholeText.slice(0, 50) + "..."}</p>
+              <p>{bulletList.slice(0, 50) + "..."}</p>
             </div>
           </div>
           <div>
