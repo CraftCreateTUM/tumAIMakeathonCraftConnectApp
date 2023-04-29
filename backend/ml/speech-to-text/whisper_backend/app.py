@@ -1,9 +1,11 @@
 import os
 
 import whisper
-from flask import Flask, request
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app)
 
 RECORDINGS_PATH = "tmp_recordings"
 
@@ -19,7 +21,14 @@ def transcribe_file():
         # Print transcription:
         model = whisper.load_model("base")
         result = model.transcribe(os.path.join(RECORDINGS_PATH, file.filename))
-        return result["text"]
+        transcription = result["text"]
+
+        response = jsonify({'transcription': transcription})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+
+        return response
 
     else:
         return 'Invalid file format. Please upload a .webm file.'
