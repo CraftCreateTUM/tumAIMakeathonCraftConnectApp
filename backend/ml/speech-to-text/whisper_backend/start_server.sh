@@ -1,1 +1,1 @@
-gunicorn wsgi:app -w 4 -b 0.0.0.0:5000
+gunicorn --certfile fullchain.pem --keyfile privkey.pem -b 0.0.0.0:5000 wsgi:app

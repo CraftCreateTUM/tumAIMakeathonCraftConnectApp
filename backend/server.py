@@ -15,14 +15,14 @@ def index():
 @app.route('/bullet_points', methods=['POST'])
 def bullet_points():
     try:
-        return jsonify({'message': get_bulletlist(request.json['message'])})
+        return jsonify({'message': get_bulletlist(translate_text(request.json['message']))})
     except Exception as e:
         return jsonify({'error': str(e)})
 
 @app.route('/description_sentence', methods=['POST'])
 def description_sentence():
     try:
-        return jsonify({'message': get_description_sentence(request.json['message'])})
+        return jsonify({'message': get_description_sentence(translate_text(request.json['message']))})
     except Exception as e:
         return jsonify({'error': str(e)})
 
