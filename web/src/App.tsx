@@ -25,8 +25,10 @@ import {
   Box,
   Textarea,
 } from "@chakra-ui/react";
+
 import { ChatIcon } from "@chakra-ui/icons";
-import { FaCamera } from "react-icons/fa";
+import { FaCamera, FaPause } from "react-icons/fa";
+
 // import { FaMicrophone } from "react-icons/fa";
 
 function App() {
@@ -116,122 +118,149 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Box bg="#9AE6B4">
-        <Center>
-          <Stack>
+      <Center>
+        <Stack>
+          <Center>
             <Heading>Craft Connect</Heading>
-            <Button
-              colorScheme="blue"
-              onClick={() => {
-                setShowReportSurvey(!showReportSurvey);
-              }}
-            >
-              Create new report
-            </Button>
+          </Center>
+          <Button
+            width={"100%"}
+            colorScheme="blue"
+            onClick={() => {
+              setShowReportSurvey(!showReportSurvey);
+            }}
+          >
+            Create new report
+          </Button>
 
-            {showReportSurvey && (
-              <div>
-                <Box
-                  borderRadius="md"
-                  style={{
-                    height: 300,
-                    width: 230,
-                    backgroundColor: "#e9e9e9",
-                  }}
-                >
-                  <div style={{ marginLeft: "3px", marginTop: "6px" }}>
-                    <Center>
-                      <Heading
-                        as="h3"
-                        size="md"
-                        style={{ marginBottom: "3px" }}
-                      >
-                        Status of work{" "}
-                      </Heading>
-                    </Center>
-                    <Box as="p" fontSize="xs" fontWeight="bold" color="black">
-                      <Heading as="h4" size="md">
-                        {" "}
-                        Description{" "}
-                      </Heading>
-                      {descriptionSentence.slice(0, 100) + "..."}
-                    </Box>
+          {showReportSurvey && (
+            <div>
+              <Box
+                borderRadius="md"
+                style={{
+                  height: "75%",
+                  width: "100%",
+                  backgroundColor: "#e9e9e9",
+                }}
+              >
+                <div style={{ marginLeft: "3px", marginTop: "6px" }}>
+                  <Center>
+                    <Heading as="h2" size="lg" style={{ marginBottom: "3px" }}>
+                      Status of work{" "}
+                    </Heading>
+                  </Center>
+
+                  <Box
+                    overflow="auto"
+                    overflowY="hidden"
+                    style={{ height: "75%", width: "100%" }}
+                    as="p"
+                    fontSize="xs"
+                    fontWeight="bold"
+                    color="black"
+                  >
+                    <Heading as="h4" size="md">
+                      {" "}
+                      Description{" "}
+                    </Heading>
+
+                    {descriptionSentence}
+                  </Box>
+
+                  <Stack>
                     <Heading as="h4" size="md">
                       {" "}
                       Reason{" "}
                     </Heading>
-                    <Box as="p" fontSize="xs" fontWeight="bold" color="black">
-                      {wholeText.slice(0, 100) + "..."}
-                    </Box>
-                    <Heading as="h4" size="md">
-                      {" "}
-                      List{" "}
-                    </Heading>
-                    <Box as="p" fontSize="xs" fontWeight="bold" color="black">
-                      {bulletList.slice(0, 100) + "..."}
-                    </Box>
-                  </div>
-                </Box>
-                <div>
-                  <Center>
-                    <IconButton
-                      aria-label="Open chat"
-                      icon={<ChatIcon />}
-                      onClick={() => {
-                        setShowTextReportBox(!showTextReportBox);
-                      }}
-                    />
-                    <IconButton
-                      aria-label="Open chat"
-                      icon={<FaCamera />}
-                      onClick={() => {
-                        //Insert function here;
-                      }}
-                    />
-                    <button
-                      className="transcribe-button"
-                      onClick={transcribeAudio}
-                    >
-                      Transcribe audio
-                    </button>
 
-                    <div>
-                      <AudioRecorder
-                        onRecordingComplete={(blob: Blob) =>
-                          addAudioElement(blob)
-                        }
-                        recorderControls={recorderControls}
-                      />
-                      <br />
-                      <button onClick={recorderControls.stopRecording}>
-                        Stop recording
-                      </button>
-                      <br />
-                    </div>
-                  </Center>
-                </div>
-                {showTextReportBox && (
-                  // align on top of each other
-                  <Box>
-                    <p>What have you done today?</p>
-                    <form onSubmit={handleSubmit}>
-                      <Textarea
-                        value={textAreaValue}
-                        onChange={handleTextAreaChange}
-                      ></Textarea>
-                      <Box>
-                        <button type="submit" className="report-button">
-                          Submit
-                        </button>
-                      </Box>
-                    </form>
+                    <Box
+                      overflowY="scroll"
+                      style={{ height: "75%", width: "100%" }}
+                      as="p"
+                      fontSize="xs"
+                      fontWeight="bold"
+                      color="black"
+                    >
+                      {wholeText}
+                    </Box>
+                  </Stack>
+
+                  <Heading as="h4" size="md">
+                    {" "}
+                    List{" "}
+                  </Heading>
+                  <Box
+                    overflowY="scroll"
+                    style={{ height: "75%", width: "100%" }}
+                    as="p"
+                    fontSize="xs"
+                    fontWeight="bold"
+                    color="black"
+                  >
+                    {bulletList}
                   </Box>
-                )}
+                </div>
+              </Box>
+
+              <div>
+                <Center>
+                  <IconButton
+                    aria-label="Open chat"
+                    icon={<ChatIcon />}
+                    onClick={() => {
+                      setShowTextReportBox(!showTextReportBox);
+                    }}
+                  />
+                  <IconButton
+                    aria-label="Open chat"
+                    icon={<FaCamera />}
+                    onClick={() => {
+                      //Insert function here;
+                    }}
+                  />
+                  <Button
+                    className="transcribe-button"
+                    onClick={transcribeAudio}
+                  >
+                    Transcribe audio
+                  </Button>
+
+                  <div>
+                    <AudioRecorder
+                      onRecordingComplete={(blob: Blob) =>
+                        addAudioElement(blob)
+                      }
+                      recorderControls={recorderControls}
+                    />
+                    <br />
+                    <Button onClick={recorderControls.stopRecording}>
+                      Stop recording
+                    </Button>
+                    <br />
+                  </div>
+                </Center>
               </div>
-            )}
-          </Stack>
-        </Center>
-      </Box>
+              {showTextReportBox && (
+                // align on top of each other
+                <Box>
+                  <p>What have you done today?</p>
+                  <form onSubmit={handleSubmit}>
+                    <Textarea
+                      value={textAreaValue}
+                      onChange={handleTextAreaChange}
+                    ></Textarea>
+                    <Box>
+                      <button type="submit" className="report-button">
+                        Submit
+                      </button>
+                    </Box>
+                  </form>
+                </Box>
+              )}
+            </div>
+          )}
+        </Stack>
+      </Center>
     </ChakraProvider>
   );
 }
