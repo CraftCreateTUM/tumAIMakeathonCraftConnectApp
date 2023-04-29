@@ -1,3 +1,5 @@
 venv
 backend/.DS_Store
 .DS_Store
+backend/pdf/output/*
+backend/.env
