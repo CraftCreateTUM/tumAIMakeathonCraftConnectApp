@@ -3,9 +3,14 @@ from flask_cors import CORS
 from gpt.gpt import get_bulletlist, get_description_sentence
 from flask import send_file
 from pdf.pdfReplace import return_pdf
+from translate.translate import translate_text
 
 app = Flask(__name__)
 CORS(app)
+
+@app.route('/')
+def index():
+    return 'This is the backend for Craft Connect.'
 
 @app.route('/bullet_points', methods=['POST'])
 def bullet_points():
@@ -28,6 +33,13 @@ def return_files_tut():
         return send_file(path, attachment_filename='report.pdf')
     except Exception as e:
         return str(e)
+
+@app.route('/translate', methods=['POST'])
+def translate():
+    try:
+        return jsonify({'message': translate_text(request.json['text'])})
+    except Exception as e:
+        return jsonify({'error': str(e)})
     
 if __name__ == '__main__':
     app.run(debug=True)

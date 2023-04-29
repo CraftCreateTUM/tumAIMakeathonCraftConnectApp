@@ -1,0 +1,1 @@
+curl -X POST -F "file=@$LOCAL_FILE_PATH" http://$SPEECH_BACKEND_IP_ADDRESS:5000/transcribe
