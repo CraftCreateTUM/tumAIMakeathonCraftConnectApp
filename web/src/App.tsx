@@ -165,7 +165,7 @@ function App() {
   };
 
   return (
-    <Box bg="#189AB4">
+    <Box bg="#189AB4" h="100vh">
       <ChakraProvider>
         <Center>
           <Stack>
@@ -183,8 +183,16 @@ function App() {
               >
                 <div style={{ marginLeft: "3px", marginTop: "6px" }}>
                   <Center>
-                    <Heading as="h2" size="lg" style={{ marginBottom: "3px" }}>
-                      Status of work{" "}
+                    <Heading
+                      as="h2"
+                      size="lg"
+                      style={{
+                        marginBottom: "5px",
+                        marginLeft: "5px",
+                        marginRight: "5px",
+                      }}
+                    >
+                      Current input{" "}
                     </Heading>
                   </Center>
 
@@ -201,7 +209,15 @@ function App() {
                       {" "}
                       Description{" "}
                     </Heading>
-
+                    <Box
+                      overflow="auto"
+                      overflowY="hidden"
+                      style={{ height: "75%", width: "100%" }}
+                      as="p"
+                      fontSize="xs"
+                      fontWeight="bold"
+                      color="black"
+                    ></Box>
                     {descriptionSentence}
                   </Box>
 
@@ -210,17 +226,18 @@ function App() {
                       {" "}
                       Reason{" "}
                     </Heading>
-
-                    <Box
-                      overflowY="scroll"
-                      style={{ height: "75%", width: "100%" }}
-                      as="p"
-                      fontSize="xs"
-                      fontWeight="bold"
-                      color="black"
-                    >
-                      {wholeText}
-                    </Box>
+                    <Stack>
+                      <Box
+                        overflowY="scroll"
+                        style={{ height: "75%", width: "100%" }}
+                        as="p"
+                        fontSize="xs"
+                        fontWeight="bold"
+                        color="black"
+                      >
+                        {wholeText}
+                      </Box>
+                    </Stack>
                   </Stack>
 
                   <Heading as="h4" size="md">
@@ -248,22 +265,23 @@ function App() {
                   )}
                 </div>
               </Box>
-
+              <Center>
+                <Heading size="md">Choose input source</Heading>
+              </Center>
               <div>
                 <Center>
-                  <Tooltip label="Click this to input text">
-                    <IconButton
-                      onDragOver={() => {
-                        "Click this to input text";
-                      }}
-                      aria-label="Open chat"
-                      rounded={"full"}
-                      icon={<ChatIcon />}
-                      onClick={() => {
-                        setShowTextReportBox(!showTextReportBox);
-                      }}
-                    />
-                  </Tooltip>
+                  <IconButton
+                    onDragOver={() => {
+                      "Click this to input text";
+                    }}
+                    aria-label="Open chat"
+                    rounded={"full"}
+                    icon={<ChatIcon />}
+                    onClick={() => {
+                      setShowTextReportBox(!showTextReportBox);
+                    }}
+                  />
+
                   <IconButton
                     aria-label="Open chat"
                     rounded={"full"}
@@ -272,22 +290,18 @@ function App() {
                       startOcr();
                     }}
                   />
-                  <IconButton
-                    aria-label="Open chat"
-                    rounded={"full"}
-                    icon={<CheckIcon />}
-                    onClick={() => {
-                      transcribeAudio;
-                    }}
-                  />
-
+                  <Button
+                    className="transcribe-button"
+                    onClick={transcribeAudio}
+                  >
+                    Transcribe audio
+                  </Button>
                   <AudioRecorder
                     onRecordingComplete={(blob: Blob) => addAudioElement(blob)}
                     recorderControls={recorderControls}
                   />
                   <br />
-
-                  <IconButton
+                  {/*<IconButton
                     aria-label="Open chat"
                     rounded={"full"}
                     icon={<FaPause />}
@@ -295,7 +309,7 @@ function App() {
                       recorderControls.stopRecording;
                     }}
                   />
-
+                  */}
                   <br />
                 </Center>
               </div>
