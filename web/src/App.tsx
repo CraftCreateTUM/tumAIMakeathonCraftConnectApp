@@ -315,6 +315,7 @@ function App() {
                         colorScheme="green"
                         type="submit"
                         className="report-button"
+                        onClick={handleSubmit}
                       >
                         Submit
                       </Button>
