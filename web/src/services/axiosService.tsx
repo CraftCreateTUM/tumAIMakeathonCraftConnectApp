@@ -35,6 +35,23 @@ export const translateText = (text: string) => {
   });
 };
 
+interface PdfData {
+  name: string;
+  company: string;
+  location: string;
+  codeWordEquipment: string;
+  descriptionnumber: string;
+  description: string;
+  servicenumber: string;
+  jobdescription: string;
+  dotlist: string;
+  date: string;
+}
+
+export const getPdfFromServer = (pdfData: PdfData) => {
+  return axiosInstance.post("/pdf", pdfData);
+};
+
 const transcriptionInstance = axios.create({
   baseURL: "http://104.155.22.46:5000",
   timeout: 10000,
