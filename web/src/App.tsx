@@ -14,8 +14,9 @@ function App() {
     // send text area respons to backend
     postTextReport(textAreaValue)
       .then((response) => {
+        console.log("response message backend: ", response.data.message);
         setReportText(
-          response.data.message ? response.data.message : response.data.error
+          response.data.message ? response.data.message : "Error in response"
         );
       })
       .catch((error) => {
