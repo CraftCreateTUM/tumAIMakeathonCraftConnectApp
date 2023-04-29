@@ -8,14 +8,14 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/bullet_points', methods=['POST'])
-def chat_gpt():
+def bullet_points():
     try:
         return jsonify({'message': get_bulletlist(request.json['text'])})
     except Exception as e:
         return jsonify({'error': str(e)})
 
 @app.route('/description_sentence', methods=['POST'])
-def chat_gpt():
+def description_sentence():
     try:
         return jsonify({'message': get_description_sentence(request.json['text'])})
     except Exception as e:
