@@ -30,8 +30,7 @@ def get_bulletlist(text):
         # tell gpt where to stop with the answer
         stop=[" Human:", " AI:"]
     )
-    print(response.choices[0].text.split("\n"))
-    return response.choices[0].text.split("\n")
+    return response.choices[0].text
 
 def get_description_sentence(text):
     response = openai.Completion.create(
