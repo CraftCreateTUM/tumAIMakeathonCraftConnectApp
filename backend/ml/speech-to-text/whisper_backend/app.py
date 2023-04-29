@@ -22,7 +22,7 @@ def transcribe_file():
         file.save(os.path.join(RECORDINGS_PATH, file.filename))
 
         # Print transcription:
-        model = whisper.load_model("large")
+        model = whisper.load_model("small")
         result = model.transcribe(os.path.join(RECORDINGS_PATH, file.filename))
         transcription = result["text"]
 
