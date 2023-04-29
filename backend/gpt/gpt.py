@@ -12,7 +12,11 @@ load_dotenv()
 
 
 # Set up the OpenAI API client
+
+if os.getenv("OPENAI_API_KEY") is None:
+    raise ValueError("ENV VARIABLES NOT FOUND")
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 def get_bulletlist(text):
     response = openai.Completion.create(
