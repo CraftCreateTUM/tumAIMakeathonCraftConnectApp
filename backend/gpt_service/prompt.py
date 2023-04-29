@@ -1,10 +1,27 @@
-_SECTIONS = [
-    "Description of the problem"
-    "Solution to the problem and what was being done"
-]
+_TEXT_TO_BULLET_LIST = """The following is a human talking about what he has done. The AI system will anser with a bullet list of the things that were done. The AI system is formal, preceise and clear.
+Human: Adjusted the forward proximity switch to ensure that the dancer could calibrate and calibrated. Tested the roll drive system and found the drive 1011t1 was intermittently faulting. The wires had a bad connection that terminate for
+control. Corrected this and found that the drive would enable and was ready to run but was missing the signal. Reached out to Germany for assistance and found that the drive had an issue. The speed was calculating but the drive never transfered it to run. Replaced the drive, memory module and communications card. Reloaded the parameters into the drive and corrected the problem. There is some tape on the splicer roll that needs to be removed by the crew next PM. The clamp bar on both sides have damage from the missed splices. The machine was not picking up the speed of the paper and was calculating everything at 0 speed. This cause excessive ware on the clamping bar. The customer ordered this and should replace it as soon as possible. The customer is also telling me that the roll stand 5 arms are bleeding down when not running for a while. I do not trust myself to adjust the check valve to correct this issue as I am not knowledgeable enough with hydraulics. I suggest to have a mechanic come to help correct this issue or attempt it with the maintenance department.
+AI:  1. - Adjusted and calibrated forward proximity switch for dancer
+2. - Tested roll drive system and found intermittent fault in drive 1011t1
+3. - Fixed bad connection in wires for control and checked drive enablement
+4. - Found missing signal issue in drive and contacted Germany for help
+5. - Replaced drive, memory module and communications card and reloaded parameters 6. - Solved the problem and removed tape on splicer roll
+7. - Noted damage on clamp bar on both sides from missed splices
+8. - Advised customer to replace clamp bar as soon as possible
+9. - Reported issue with roll stand 5 arms bleeding down when not running
+10. - Suggested mechanic help or maintenance department for hydraulic check valve adjustment
+Human: {}
+AI: """
 
-PRE_PROMPT = "The following text is an input from a user who talks about things he has done. \
-    He is talking in a very informal way. Transform this text into a more formal text that can be used for a report. \
-    The text should not be written in the first person. Additionally, the text should be structured in specific sections.  \
-    The sections are the following {}. For each section answer separately \
-The text is the following:".format(_SECTIONS)
+_TEXT_TO_DESCRIPTION_SENTENCE = """The following is a human talking about what he has done. The AI system will anser with one precise sentence what the described issue was.
+Human: There are many issues with the machine. The main issue for the gap is that the glue pan is bent. The cam followers are also worn out and not rolling anymore along with the rails showing severe signs of wear. The customer does not have the release applicator roll button on the touch screen. I sent off to Germany for an update for this on the touch screen. I am not sure if this is an upgrade or not. I turned this on in the software so that the customer could run production without issue. The customer replaced the rails along with the cam followers. The gap on the drive side was way off. We calibrated electrically and the customer adjusted the mechanical stops on C-flute so that the machine is correct. B-flute needs a mechanical and electrical calibration. The customer stated they are going to replace B-flute, so we did not focus on this. We ran for one day with the gap control turned on and the release for the load cells turned on. Tried to push the machine speed and found that the tach on the back of the main motor had water in it. This caused a major speed fluctuation when the machine was pushed over 1000fpm. Cleaned with electrical contact spray, adjusted speeds on all rolls on the machine and simulated production. There is still a speed issue when running over 1000fpm. Investigated the main motor and found the brushes are worn with a lot of carbon buildup inside the motor. I suggest replacing the motor and send it out to have a PM performed on it. The commutator of the main motor does not show any discoloration, pitting or groves. The customer should also replace the tach on the motor. There is a lot of carbon build up inside of it and discoloration of the commutator. While in production, we had no issues with the gap control. I recorded the soft touch and found no issues either after replacing the rails and cam followers. Placed the machine in soft touch and ran over night with no issues. The customer would benefit from a mechanical tech coming in to correct mechanical issues and give training. I can only go so far mechanically. Optimal path forward would be to have a mechanic come in for an evaluation of the MF and give a list of parts needed to correct issues. This would allow for a planned intervention to correct the mechanical issues that the machine has along with being able to plan the down time for the intervention.
+The limit switch for the glue pan on the drive side has issues and needs to be replaced. The maintenance guys stated that it is ordered but has not come in yet. There were multiple times the glue pan would not engage due to this. The applicator roll to doctor roll gap needed adjustment. The linkage is worn and needs to be replaced along with the eccentrics. We could not move the gap to .006 minimum or .028 maximum. It is calibrated at .007 and .026. This should be ok because only b and c flute are run on the machine and do not need the full adjustment. The lifting spindle for this gap also needs to be replaced. The seal on the end of the shaft is damaged and will not stay in place allowing debris to get into the gearing. It is only a matter of time before this fails.
+AI: The customer is having gap issues with MF2.
+Human: {}
+AI: """
+
+def get_bulletlist_prompt(text):
+    return _TEXT_TO_BULLET_LIST.format(text)
+
+def get_description_sentence_prompt(text):
+    return _TEXT_TO_DESCRIPTION_SENTENCE.format(text)

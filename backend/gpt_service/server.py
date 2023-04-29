@@ -1,15 +1,21 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from gpt import talk_to_gpt
+from gpt import get_bulletlist, get_description_sentence
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/gpt', methods=['POST'])
+@app.route('/bullet_points', methods=['POST'])
 def chat_gpt():
     try:
-        return jsonify({'message': talk_to_gpt(request.json['message'])})
-    
+        return jsonify({'message': get_bulletlist(request.json['text'])})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+@app.route('/description_sentence', methods=['POST'])
+def chat_gpt():
+    try:
+        return jsonify({'message': get_description_sentence(request.json['text'])})
     except Exception as e:
         return jsonify({'error': str(e)})
     
