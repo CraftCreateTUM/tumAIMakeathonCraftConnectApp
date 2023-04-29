@@ -29,6 +29,7 @@ import {
 
 import { ChatIcon } from "@chakra-ui/icons";
 import { FaCamera } from "react-icons/fa";
+// import CameraComponent from "./camera";
 
 // import { FaMicrophone } from "react-icons/fa";
 
@@ -265,12 +266,11 @@ function App() {
                       setShowTextReportBox(!showTextReportBox);
                     }}
                   />
-                  <CameraComponent onCapture={startOcr} />
                   <IconButton
                     aria-label="Open chat"
                     icon={<FaCamera />}
                     onClick={() => {
-                      startOcr()
+                      startOcr();
                     }}
                   />
                   <Button
