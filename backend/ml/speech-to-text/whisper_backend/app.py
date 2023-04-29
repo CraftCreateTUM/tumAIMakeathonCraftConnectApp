@@ -54,8 +54,7 @@ def ocr():
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, 
-            ssl_context=(
+    app.run(ssl_context=(
                 "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/key.pem",
                 "/home/makeathonchris/test/tumAIMakeathonCraftConnectApp/backend/ml/speech-to-text/whisper_backend/cert.pem"
                 )
