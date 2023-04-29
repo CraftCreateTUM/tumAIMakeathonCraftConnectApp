@@ -45,34 +45,32 @@ const transcriptionInstance = axios.create({
   },
 });
 
-export const getAudioTranscription = async (audioUrl: string) => {
+export const getAudioTranscription = async (audioUrl: string): Promise<AxiosResponse> => {
   let result = {
     data: {
       transcription: "Error in response",
-    },
+    }
   } as AxiosResponse;
 
-  await fetch(audioUrl)
-    .then((response) => response.blob())
-    .then((blob) => {
-      // Create a new FormData object and append the file data to it
-      const formData = new FormData();
-      formData.append("file", blob, "test_file.webm");
+  try {
+    const response = await fetch(audioUrl);
+    const blob = await response.blob();
 
-      // Send the file as part of a POST request
-      transcriptionInstance
-        .post("/transcribe", formData, {})
-        .then((response) => {
-          console.log("File uploaded successfully:", response.data);
-          result = response;
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-        });
-    })
-    .catch((error) => {
-      console.error("Error fetching file:", error);
-    });
+    // Create a new FormData object and append the file data to it
+    const formData = new FormData();
+    formData.append("file", blob, "test_file.webm");
+
+    // Send the file as part of a POST request
+    try {
+      const transcriptionResponse = await transcriptionInstance.post("/transcribe", formData, {});
+      console.log("File uploaded successfully:", transcriptionResponse.data);
+      result = transcriptionResponse;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  } catch (error) {
+    console.error("Error fetching file:", error);
+  }
 
   return result;
 };
