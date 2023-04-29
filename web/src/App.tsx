@@ -1,9 +1,15 @@
 import { useState } from "react";
+
 import {
   getBulletPointList,
   getDescriptionSentence,
   translateText,
+  getAudioTranscription
 } from "./services/axiosService";
+
+import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
+// Check quick-start docs here: https://www.npmjs.com/package/react-audio-voice-recorder
+
 import "./App.css";
 
 function App() {
@@ -14,9 +20,32 @@ function App() {
   const [wholeText, setWholetext] = useState("Unfilled");
   const [bulletList, setBulletList] = useState("Unfilled");
 
+  const [audioFile, setAudioFile] = useState(null);
+
+  const recorderControls = useAudioRecorder();
+  const addAudioElement = (blob) => {
+    const url = URL.createObjectURL(blob);
+    const audio = document.createElement('audio');
+    audio.src = url;
+    audio.controls = true;
+
+    setAudioFile(url);
+    console.log("File was set");
+    document.body.appendChild(audio);
+  }
+
+  const transcribeAudio = () => {
+    getAudioTranscription(audioFile)
+      .then((response) => {
+        console.log(response);
+        // console.log(response.data.message);
+      })
+  };
+
   const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
     event.preventDefault();
     console.log("submitting text: ", textAreaValue);
+
     setDescriptionSentence("Loading...");
     getDescriptionSentence(textAreaValue)
       .then((response) => {
@@ -89,7 +118,19 @@ function App() {
             >
               text
             </button>
-            <button className="report-button">speech</button>
+
+            <button className="transcribe-button" onClick={transcribeAudio}>Transcribe audio</button>
+
+            <div>
+              <AudioRecorder
+                onRecordingComplete={(blob) => addAudioElement(blob)}
+                recorderControls={recorderControls}
+              />
+              <br />
+              <button onClick={recorderControls.stopRecording}>Stop recording</button>
+              <br />
+            </div>
+
             <button className="report-button">image</button>
           </div>
           {showTextReportBox && (
