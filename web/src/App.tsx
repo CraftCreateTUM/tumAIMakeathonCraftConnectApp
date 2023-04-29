@@ -264,7 +264,6 @@ function App() {
                       }}
                     />
                   </Tooltip>
-                  <CameraComponent onCapture={startOcr} />
                   <IconButton
                     aria-label="Open chat"
                     rounded={"full"}
