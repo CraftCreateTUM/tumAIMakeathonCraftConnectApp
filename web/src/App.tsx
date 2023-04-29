@@ -32,7 +32,6 @@ import {
 
 import { ChatIcon } from "@chakra-ui/icons";
 
-import { FaCamera } from "react-icons/fa";
 // import CameraComponent from "./camera";
 
 // import { FaMicrophone } from "react-icons/fa";
@@ -46,8 +45,8 @@ function App() {
   const [bulletList, setBulletList] = useState("Unfilled");
   const [pdfReadyToBeMade, setPdfReadyToBeMade] = useState(false);
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imageFile, setFile] = useState<File | null>(null);
+  //const [selectedImage, setSelectedImage] = useState(null);
+  //const [_, setFile] = useState<File | null>(null);
 
   const [audioFile, setAudioFile] = useState("");
 
@@ -127,7 +126,7 @@ function App() {
   const handleFileChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       if (!event.target.files) return;
-      setFile(event.target.files[0]);
+      //setFile(event.target.files[0]);
       getOcr(event.target.files[0])
         .then((response) => {
           setShowTextReportBox(true);
@@ -235,6 +234,9 @@ function App() {
                       }
                       recorderControls={recorderControls}
                     />
+                  </Box>
+                  <Box>
+                    <Button onClick={transcribeAudio}>Transcribe audio</Button>
                   </Box>
                 </Center>
                 {showTextReportBox && (
