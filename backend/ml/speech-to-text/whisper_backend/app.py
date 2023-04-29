@@ -1,7 +1,7 @@
 import os
 
 import whisper
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def transcribe_file():
         file.save(os.path.join(RECORDINGS_PATH, file.filename))
 
         # Print transcription:
-        model = whisper.load_model("base")
+        model = whisper.load_model("large")
         result = model.transcribe(os.path.join(RECORDINGS_PATH, file.filename))
         transcription = result["text"]
 
