@@ -219,15 +219,15 @@ function App() {
                     style={{ margin: "1em" }}
                   />
 
-                  <IconButton
-                    aria-label="Open chat"
-                    rounded={"full"}
-                    icon={<FaCamera />}
-                    onClick={() => {
-                      startOcr();
-                    }}
-                    style={{ margin: "1em" }}
-                  />
+                  <Box>
+                    <Input
+                      type="file"
+                      name="myImage"
+                      borderRadius={20}
+                      onChange={handleFileChange}
+                      accept="image/*"
+                    />
+                  </Box>
                   <Box style={{ margin: "1em" }}>
                     <AudioRecorder
                       onRecordingComplete={(blob: Blob) =>
