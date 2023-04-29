@@ -15,7 +15,7 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 // Check quick-start docs here: https://www.npmjs.com/package/react-audio-voice-recorder
 
 import "./App.css";
-import { ChakraProvider, Tooltip } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 // import chakraTheme from "@chakra-ui/theme";
 import {
   Button,
@@ -28,9 +28,9 @@ import {
   FormControl,
 } from "@chakra-ui/react";
 
-import { ChatIcon, CheckIcon } from "@chakra-ui/icons";
+import { ChatIcon } from "@chakra-ui/icons";
 
-import { FaCamera, FaPause } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 // import CameraComponent from "./camera";
 
 // import { FaMicrophone } from "react-icons/fa";
