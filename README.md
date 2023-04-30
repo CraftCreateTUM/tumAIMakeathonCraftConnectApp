@@ -1,6 +1,3 @@
-# tumAIMakeathonCraftConnect
-Makeathon app - Solution for language barriers within the work industry.
-
 # tumAIMakeathonCraftConnectApp
 Makeathon app - Solution for language barriers within the work industry.
 
