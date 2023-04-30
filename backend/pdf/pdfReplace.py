@@ -54,12 +54,11 @@ def createpdf():
 
     doc = SimpleDocTemplate(pdf_path, pagesize=letter)
     
-    # if company == "electrovolt":
-    #     image = "./backend/pdf/resources/electrovolt.jpg"
-    # else:
-    #     image = "electrovolt2.jpg"
-    # img = Image(image, width=150, height=100)
-    # elements.append(img)
+    if company == "electrovolt":
+         image = current_directory + "/pdf/resources/electrovolt.jpg"
+         if os.path.exists(image):
+            img = Image(image, width=150, height=100)
+            elements.append(img)
 
 # Add the header
 # Add the header
