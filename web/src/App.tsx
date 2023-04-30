@@ -365,7 +365,7 @@ function App() {
                         {descriptionSentence}
                       </Box>
 
-                      <Stack>
+                      <Stack marginTop="1em">
                         <Heading as="h4" size="md">
                           {" "}
                           Reason{" "}
@@ -384,7 +384,7 @@ function App() {
                         </Stack>
                       </Stack>
 
-                      <Heading as="h4" size="md">
+                      <Heading as="h4" size="md" marginTop="1em">
                         {" "}
                         List{" "}
                       </Heading>
