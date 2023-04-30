@@ -271,7 +271,7 @@ function App() {
                   {audioToTextLoading && (
                     <Center marginTop="1em">
                       <p style={{ marginRight: "0.5em" }}>
-                        Turning speach to text
+                        Turning speech to text
                       </p>
                       <Spinner />
                     </Center>
