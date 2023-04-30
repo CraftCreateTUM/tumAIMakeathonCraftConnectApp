@@ -190,7 +190,7 @@ function App() {
           <Stack>
             <Center>
               <Box style={{ marginTop: "2em" }}>
-                <Heading color="white">Craft Connect</Heading>
+                <Heading color="white">CraftConnect</Heading>
               </Box>
             </Center>
             <Box
@@ -210,7 +210,7 @@ function App() {
                   <>
                     <IconButton
                       onDragOver={() => {
-                        "Click this to input text";
+                        "Click this to input text.";
                       }}
                       aria-label="Open chat"
                       rounded={"full"}
@@ -222,7 +222,7 @@ function App() {
                     />
                     <IconButton
                       onDragOver={() => {
-                        "Click this to input a photo";
+                        "Click this to input a photo.";
                       }}
                       aria-label="Open camera"
                       rounded={"full"}
