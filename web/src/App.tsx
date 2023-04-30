@@ -405,7 +405,7 @@ function App() {
                   wholeText === "Loading..." ||
                   bulletList === "Loading..." ? (
                     <Spinner
-                      style={{ marginLeft: "1em", marginRight: "1em" }}
+                      style={{ marginLeft: "1em", marginRight: "1em", marginTop: "1em", marginBottom: "1em"}}
                     />
                   ) : (
                     descriptionSentence !== "Unfilled" &&
