@@ -266,7 +266,7 @@ function App() {
               )}
 
               {cameraButtonPressed && (
-                <Box>
+                <Box paddingTop="0.5em">
                   <Input
                     type="file"
                     name="myImage"
