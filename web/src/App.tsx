@@ -44,6 +44,7 @@ function App() {
   const [cameraButtonPressed, setCameraButtonPressed] = useState(false);
   const [audioToTextLoading, setAudioToTextLoading] = useState(false);
   const [personRecording, setPersonRecording] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const [audioFile, setAudioFile] = useState("");
 
@@ -129,11 +130,13 @@ function App() {
     (event: ChangeEvent<HTMLInputElement>) => {
       if (!event.target.files) return;
       //setFile(event.target.files[0]);
+      setImageLoading(true);
       getOcr(event.target.files[0])
         .then((response) => {
           setShowTextReportBox(true);
           console.log(response.data.text);
           setTextAreaValue(response.data.text);
+          setImageLoading(false);
         })
         .catch((error) => {
           console.log("error in frontend: ", error);
@@ -278,6 +281,15 @@ function App() {
                     borderWidth="0.1em"
                   />
                 </Box>
+              )}
+
+              {imageLoading && (
+                <Center marginTop="1em">
+                  <p style={{ marginRight: "0.5em" }}>
+                    Extracting text from image
+                  </p>
+                  <Spinner />
+                </Center>
               )}
 
               {showTextReportBox && (
