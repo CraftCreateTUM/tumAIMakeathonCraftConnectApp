@@ -43,11 +43,13 @@ function App() {
   const [pdfReadyToBeMade, setPdfReadyToBeMade] = useState(false);
   const [cameraButtonPressed, setCameraButtonPressed] = useState(false);
   const [audioToTextLoading, setAudioToTextLoading] = useState(false);
+  const [personRecording, setPersonRecording] = useState(false);
 
   const [audioFile, setAudioFile] = useState("");
 
   const recorderControls = useAudioRecorder();
   const addAudioElement = (blob: Blob) => {
+    setPersonRecording(false);
     const url = URL.createObjectURL(blob);
     const audio = document.createElement("audio");
     audio.src = url;
@@ -204,32 +206,41 @@ function App() {
             </Center>
             <div id="parent-div">
               <Center>
-                <IconButton
-                  onDragOver={() => {
-                    "Click this to input text";
-                  }}
-                  aria-label="Open chat"
-                  rounded={"full"}
-                  icon={<ChatIcon />}
-                  onClick={() => {
-                    setShowTextReportBox(!showTextReportBox);
-                  }}
-                  style={{ margin: "1em" }}
-                />
-                <IconButton
-                  onDragOver={() => {
-                    "Click this to input a photo";
-                  }}
-                  aria-label="Open camera"
-                  rounded={"full"}
-                  icon={<FaCamera />}
-                  onClick={() => {
-                    setCameraButtonPressed(!cameraButtonPressed);
-                  }}
-                  style={{ margin: "1em" }}
-                />
+                {!personRecording && (
+                  <>
+                    <IconButton
+                      onDragOver={() => {
+                        "Click this to input text";
+                      }}
+                      aria-label="Open chat"
+                      rounded={"full"}
+                      icon={<ChatIcon />}
+                      onClick={() => {
+                        setShowTextReportBox(!showTextReportBox);
+                      }}
+                      style={{ margin: "1em" }}
+                    />
+                    <IconButton
+                      onDragOver={() => {
+                        "Click this to input a photo";
+                      }}
+                      aria-label="Open camera"
+                      rounded={"full"}
+                      icon={<FaCamera />}
+                      onClick={() => {
+                        setCameraButtonPressed(!cameraButtonPressed);
+                      }}
+                      style={{ margin: "1em" }}
+                    />
+                  </>
+                )}
 
-                <Box style={{ margin: "1em" }}>
+                <Box
+                  style={{ margin: "1em" }}
+                  onClick={() => {
+                    setPersonRecording(true);
+                  }}
+                >
                   <AudioRecorder
                     onRecordingComplete={(blob: Blob) => addAudioElement(blob)}
                     recorderControls={recorderControls}
