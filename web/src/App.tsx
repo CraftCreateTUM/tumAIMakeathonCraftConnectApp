@@ -248,20 +248,6 @@ function App() {
                 </Box>
               </Center>
               <div id="icon-row"></div>
-              {cameraButtonPressed && (
-                <Box>
-                  <Input
-                    type="file"
-                    name="myImage"
-                    borderRadius={20}
-                    onChange={handleFileChange}
-                    accept="image/*"
-                    padding="0.4em"
-                    paddingLeft="1.2em"
-                    borderWidth="0.1em"
-                  />
-                </Box>
-              )}
 
               {audioFile !== "" && (
                 <Box>
@@ -276,6 +262,21 @@ function App() {
                       <Spinner />
                     </Center>
                   )}
+                </Box>
+              )}
+
+              {cameraButtonPressed && (
+                <Box>
+                  <Input
+                    type="file"
+                    name="myImage"
+                    borderRadius={20}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    padding="0.4em"
+                    paddingLeft="1.2em"
+                    borderWidth="0.1em"
+                  />
                 </Box>
               )}
 
@@ -405,7 +406,12 @@ function App() {
                   wholeText === "Loading..." ||
                   bulletList === "Loading..." ? (
                     <Spinner
-                      style={{ marginLeft: "1em", marginRight: "1em", marginTop: "1em", marginBottom: "1em"}}
+                      style={{
+                        marginLeft: "1em",
+                        marginRight: "1em",
+                        marginTop: "1em",
+                        marginBottom: "1em",
+                      }}
                     />
                   ) : (
                     descriptionSentence !== "Unfilled" &&
