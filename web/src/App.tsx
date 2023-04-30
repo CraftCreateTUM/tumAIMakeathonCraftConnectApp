@@ -45,6 +45,7 @@ function App() {
   const [bulletList, setBulletList] = useState("Unfilled");
   const [pdfReadyToBeMade, setPdfReadyToBeMade] = useState(false);
 
+
   //const [selectedImage, setSelectedImage] = useState(null);
   //const [_, setFile] = useState<File | null>(null);
 
@@ -382,13 +383,18 @@ function App() {
                       accept="image/*"
                     />
                   </Box>
-                  <Button
-                    colorScheme="red"
+                  {(descriptionSentence != "Unfilled" && descriptionSentence != "Loading...") && (wholeText != "Unfilled" && wholeText != "Loading...") && (bulletList != "Unfilled" && bulletList != "Loading...") &&(
+
+                  <Button 
+                    colorScheme="green"
                     onClick={handlePdfDownloading}
-                    style={{ marginTop: "1em" }}
+                    padding="2em"
+                    borderRadius="20px"
+                    style={{ marginTop: "1em" , marginLeft: "1em", marginRight: "1em", marginBottom: "1em"}}
                   >
                     Download PDF
                   </Button>
+                  )}
                 </Center>
               </div>
             )}
