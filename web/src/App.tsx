@@ -250,9 +250,9 @@ function App() {
               )}
 
               {audioFile !== "" && (
-                <Box>
+                <Center marginTop="1em">
                   <Button onClick={transcribeAudio}>Transcribe audio</Button>
-                </Box>
+                </Center>
               )}
 
               {showTextReportBox && (
@@ -377,30 +377,12 @@ function App() {
                   </Box>
                 </Box>
                 <Center>
-                  <IconButton
-                    onDragOver={() => {
-                      "Click this to input text";
-                    }}
-                    aria-label="Open chat"
-                    rounded={"full"}
-                    icon={<ChatIcon />}
-                    onClick={() => {
-                      setShowTextReportBox(!showTextReportBox);
-                    }}
-                  />
-                  <Box>
-                    <Input
-                      type="file"
-                      name="myImage"
-                      borderRadius={20}
-                      onChange={handleFileChange}
-                      accept="image/*"
-                    />
-                  </Box>
                   {descriptionSentence === "Loading..." ||
                   wholeText === "Loading..." ||
                   bulletList === "Loading..." ? (
-                    <Spinner style={{marginLeft: "1em",marginRight: "1em"}} />
+                    <Spinner
+                      style={{ marginLeft: "1em", marginRight: "1em" }}
+                    />
                   ) : (
                     descriptionSentence !== "Unfilled" &&
                     wholeText !== "Unfilled" &&
