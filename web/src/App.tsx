@@ -53,7 +53,9 @@ function App() {
 
     setAudioFile(url);
     console.log("File was set");
-    document.body.appendChild(audio);
+    const iconRow = document.getElementById("icon-row");
+    const parentDiv = document.getElementById("parent-div");
+    parentDiv ? parentDiv.insertBefore(audio, iconRow) : null;
   };
 
   const transcribeAudio = () => {
@@ -185,107 +187,106 @@ function App() {
                 <Heading color="white">Craft Connect</Heading>
               </Box>
             </Center>
-            <div>
-              <Box
-                borderRadius="md"
-                style={{
-                  height: "75%",
-                  width: "100%",
-                  backgroundColor: "#e9e9e9",
-                }}
-              ></Box>
-              <Center style={{ marginBottom: "0.3em" }}>
-                <Heading size="md">Choose input source</Heading>
-              </Center>
-              <div>
-                <Center>
-                  <IconButton
-                    onDragOver={() => {
-                      "Click this to input text";
-                    }}
-                    aria-label="Open chat"
-                    rounded={"full"}
-                    icon={<ChatIcon />}
-                    onClick={() => {
-                      setShowTextReportBox(!showTextReportBox);
-                    }}
-                    style={{ margin: "1em" }}
-                  />
-                  <IconButton
-                    onDragOver={() => {
-                      "Click this to input a photo";
-                    }}
-                    aria-label="Open camera"
-                    rounded={"full"}
-                    icon={<FaCamera />}
-                    onClick={() => {
-                      setCameraButtonPressed(!cameraButtonPressed);
-                    }}
-                    style={{ margin: "1em" }}
-                  />
+            <Box
+              borderRadius="md"
+              style={{
+                height: "75%",
+                width: "100%",
+                backgroundColor: "#e9e9e9",
+              }}
+            ></Box>
+            <Center style={{ marginBottom: "0.3em" }}>
+              <Heading size="md">Choose input source</Heading>
+            </Center>
+            <div id="parent-div">
+              <Center>
+                <IconButton
+                  onDragOver={() => {
+                    "Click this to input text";
+                  }}
+                  aria-label="Open chat"
+                  rounded={"full"}
+                  icon={<ChatIcon />}
+                  onClick={() => {
+                    setShowTextReportBox(!showTextReportBox);
+                  }}
+                  style={{ margin: "1em" }}
+                />
+                <IconButton
+                  onDragOver={() => {
+                    "Click this to input a photo";
+                  }}
+                  aria-label="Open camera"
+                  rounded={"full"}
+                  icon={<FaCamera />}
+                  onClick={() => {
+                    setCameraButtonPressed(!cameraButtonPressed);
+                  }}
+                  style={{ margin: "1em" }}
+                />
 
-                  <Box style={{ margin: "1em" }}>
-                    <AudioRecorder
-                      onRecordingComplete={(blob: Blob) =>
-                        addAudioElement(blob)
-                      }
-                      recorderControls={recorderControls}
-                    />
-                  </Box>
-                  <Box>
-                    <Button onClick={transcribeAudio}>Transcribe audio</Button>
+                <Box style={{ margin: "1em" }}>
+                  <AudioRecorder
+                    onRecordingComplete={(blob: Blob) => addAudioElement(blob)}
+                    recorderControls={recorderControls}
+                  />
+                </Box>
+              </Center>
+              <div id="icon-row"></div>
+              {cameraButtonPressed && (
+                <Box>
+                  <Input
+                    type="file"
+                    name="myImage"
+                    borderRadius={20}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    padding="0.4em"
+                    paddingLeft="1.2em"
+                    borderWidth="0.1em"
+                  />
+                </Box>
+              )}
+
+              {audioFile !== "" && (
+                <Box>
+                  <Button onClick={transcribeAudio}>Transcribe audio</Button>
+                </Box>
+              )}
+
+              {showTextReportBox && (
+                // align on top of each other
+                <Center>
+                  <Box style={{ marginLeft: "1em" }}>
+                    <Heading
+                      size="md"
+                      style={{ marginBottom: "1em", marginTop: "1em" }}
+                    >
+                      {" "}
+                      What have you done today?
+                    </Heading>
+                    <FormControl onSubmit={handleSubmit}>
+                      <Textarea
+                        value={textAreaValue}
+                        onChange={handleTextAreaChange}
+                        placeholder="Please write here..."
+                        style={{ backgroundColor: "white" }}
+                      ></Textarea>
+
+                      <Box style={{ marginTop: "0.5em", marginBottom: "1em" }}>
+                        <Button
+                          colorScheme="green"
+                          type="submit"
+                          className="report-button"
+                          onClick={handleSubmit}
+                        >
+                          Submit
+                        </Button>
+                      </Box>
+                    </FormControl>
                   </Box>
                 </Center>
-                {cameraButtonPressed && (
-                  <Box>
-                    <Input
-                      type="file"
-                      name="myImage"
-                      borderRadius={20}
-                      onChange={handleFileChange}
-                      accept="image/*"
-                      padding="0.4em"
-                      paddingLeft="1.2em"
-                      borderWidth="0.1em"
-                    />
-                  </Box>
-                )}
-                {showTextReportBox && (
-                  // align on top of each other
-                  <Center>
-                    <Box style={{ marginLeft: "1em" }}>
-                      <Heading
-                        size="md"
-                        style={{ marginBottom: "1em", marginTop: "1em" }}
-                      >
-                        {" "}
-                        What have you done today?
-                      </Heading>
-                      <FormControl onSubmit={handleSubmit}>
-                        <Textarea
-                          value={textAreaValue}
-                          onChange={handleTextAreaChange}
-                          placeholder="Please write here..."
-                          style={{ backgroundColor: "white" }}
-                        ></Textarea>
-
-                        <Box
-                          style={{ marginTop: "0.5em", marginBottom: "1em" }}
-                        >
-                          <Button
-                            colorScheme="green"
-                            type="submit"
-                            className="report-button"
-                            onClick={handleSubmit}
-                          >
-                            Submit
-                          </Button>
-                        </Box>
-                      </FormControl>
-                    </Box>
-                  </Center>
-                )}
-              </div>
+              )}
             </div>
 
             {pdfReadyToBeMade && (
