@@ -31,22 +31,16 @@ import {
 } from "@chakra-ui/react";
 
 import { ChatIcon } from "@chakra-ui/icons";
-
-// import CameraComponent from "./camera";
-
-// import { FaMicrophone } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 
 function App() {
-  //const [showReportSurvey, setShowReportSurvey] = useState(True);
   const [showTextReportBox, setShowTextReportBox] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
   const [descriptionSentence, setDescriptionSentence] = useState("Unfilled");
   const [wholeText, setWholetext] = useState("Unfilled");
   const [bulletList, setBulletList] = useState("Unfilled");
   const [pdfReadyToBeMade, setPdfReadyToBeMade] = useState(false);
-
-  //const [selectedImage, setSelectedImage] = useState(null);
-  //const [_, setFile] = useState<File | null>(null);
+  const [cameraButtonPressed, setCameraButtonPressed] = useState(false);
 
   const [audioFile, setAudioFile] = useState("");
 
@@ -217,16 +211,19 @@ function App() {
                     }}
                     style={{ margin: "1em" }}
                   />
+                  <IconButton
+                    onDragOver={() => {
+                      "Click this to input a photo";
+                    }}
+                    aria-label="Open camera"
+                    rounded={"full"}
+                    icon={<FaCamera />}
+                    onClick={() => {
+                      setCameraButtonPressed(!cameraButtonPressed);
+                    }}
+                    style={{ margin: "1em" }}
+                  />
 
-                  <Box>
-                    <Input
-                      type="file"
-                      name="myImage"
-                      borderRadius={20}
-                      onChange={handleFileChange}
-                      accept="image/*"
-                    />
-                  </Box>
                   <Box style={{ margin: "1em" }}>
                     <AudioRecorder
                       onRecordingComplete={(blob: Blob) =>
@@ -239,6 +236,20 @@ function App() {
                     <Button onClick={transcribeAudio}>Transcribe audio</Button>
                   </Box>
                 </Center>
+                {cameraButtonPressed && (
+                  <Box>
+                    <Input
+                      type="file"
+                      name="myImage"
+                      borderRadius={20}
+                      onChange={handleFileChange}
+                      accept="image/*"
+                      padding="0.4em"
+                      paddingLeft="1.2em"
+                      borderWidth="0.1em"
+                    />
+                  </Box>
+                )}
                 {showTextReportBox && (
                   // align on top of each other
                   <Center>
@@ -258,7 +269,9 @@ function App() {
                           style={{ backgroundColor: "white" }}
                         ></Textarea>
 
-                        <Box style={{ marginTop: "1em" }}>
+                        <Box
+                          style={{ marginTop: "0.5em", marginBottom: "1em" }}
+                        >
                           <Button
                             colorScheme="green"
                             type="submit"
@@ -361,35 +374,13 @@ function App() {
                     </div>
                   </Box>
                 </Box>
-                <Center>
-                  <IconButton
-                    onDragOver={() => {
-                      "Click this to input text";
-                    }}
-                    aria-label="Open chat"
-                    rounded={"full"}
-                    icon={<ChatIcon />}
-                    onClick={() => {
-                      setShowTextReportBox(!showTextReportBox);
-                    }}
-                  />
-                  <Box>
-                    <Input
-                      type="file"
-                      name="myImage"
-                      borderRadius={20}
-                      onChange={handleFileChange}
-                      accept="image/*"
-                    />
-                  </Box>
-                  <Button
-                    colorScheme="red"
-                    onClick={handlePdfDownloading}
-                    style={{ marginTop: "1em" }}
-                  >
-                    Download PDF
-                  </Button>
-                </Center>
+                <Button
+                  colorScheme="red"
+                  onClick={handlePdfDownloading}
+                  style={{ marginTop: "0.6em" }}
+                >
+                  Download PDF
+                </Button>
               </div>
             )}
           </Stack>
