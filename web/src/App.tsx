@@ -42,6 +42,7 @@ function App() {
   const [bulletList, setBulletList] = useState("Unfilled");
   const [pdfReadyToBeMade, setPdfReadyToBeMade] = useState(false);
   const [cameraButtonPressed, setCameraButtonPressed] = useState(false);
+  const [audioToTextLoading, setAudioToTextLoading] = useState(false);
 
   const [audioFile, setAudioFile] = useState("");
 
@@ -60,11 +61,13 @@ function App() {
   };
 
   const transcribeAudio = () => {
+    setAudioToTextLoading(true);
     getAudioTranscription(audioFile)
       .then((response) => {
         setShowTextReportBox(true);
         console.log("Transcription response: ", response);
         setTextAreaValue(response.data.transcription);
+        setAudioToTextLoading(false);
       })
       .catch((error) => {
         console.log("error in frontend: ", error);
@@ -250,9 +253,19 @@ function App() {
               )}
 
               {audioFile !== "" && (
-                <Center marginTop="1em">
-                  <Button onClick={transcribeAudio}>Transcribe audio</Button>
-                </Center>
+                <Box>
+                  <Center marginTop="1em">
+                    <Button onClick={transcribeAudio}>Transcribe audio</Button>
+                  </Center>
+                  {audioToTextLoading && (
+                    <Center marginTop="1em">
+                      <p style={{ marginRight: "0.5em" }}>
+                        Turning speach to text
+                      </p>
+                      <Spinner />
+                    </Center>
+                  )}
+                </Box>
               )}
 
               {showTextReportBox && (
