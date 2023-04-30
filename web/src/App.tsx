@@ -28,6 +28,7 @@ import {
   Textarea,
   FormControl,
   Input,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { ChatIcon } from "@chakra-ui/icons";
@@ -375,13 +376,52 @@ function App() {
                     </div>
                   </Box>
                 </Box>
-                <Button
-                  colorScheme="red"
-                  onClick={handlePdfDownloading}
-                  style={{ marginTop: "0.6em" }}
-                >
-                  Download PDF
-                </Button>
+                <Center>
+                  <IconButton
+                    onDragOver={() => {
+                      "Click this to input text";
+                    }}
+                    aria-label="Open chat"
+                    rounded={"full"}
+                    icon={<ChatIcon />}
+                    onClick={() => {
+                      setShowTextReportBox(!showTextReportBox);
+                    }}
+                  />
+                  <Box>
+                    <Input
+                      type="file"
+                      name="myImage"
+                      borderRadius={20}
+                      onChange={handleFileChange}
+                      accept="image/*"
+                    />
+                  </Box>
+                  {descriptionSentence === "Loading..." ||
+                  wholeText === "Loading..." ||
+                  bulletList === "Loading..." ? (
+                    <Spinner style={{marginLeft: "1em",marginRight: "1em"}} />
+                  ) : (
+                    descriptionSentence !== "Unfilled" &&
+                    wholeText !== "Unfilled" &&
+                    bulletList !== "Unfilled" && (
+                      <Button
+                        colorScheme="green"
+                        onClick={handlePdfDownloading}
+                        padding="2em"
+                        borderRadius="20px"
+                        style={{
+                          marginTop: "1em",
+                          marginLeft: "1em",
+                          marginRight: "1em",
+                          marginBottom: "1em",
+                        }}
+                      >
+                        Download PDF
+                      </Button>
+                    )
+                  )}
+                </Center>
               </div>
             )}
           </Stack>
