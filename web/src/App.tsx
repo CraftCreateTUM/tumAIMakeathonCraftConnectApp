@@ -28,6 +28,7 @@ import {
   Textarea,
   FormControl,
   Input,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { ChatIcon } from "@chakra-ui/icons";
@@ -395,17 +396,29 @@ function App() {
                       accept="image/*"
                     />
                   </Box>
-                  {(descriptionSentence != "Unfilled" && descriptionSentence != "Loading...") && (wholeText != "Unfilled" && wholeText != "Loading...") && (bulletList != "Unfilled" && bulletList != "Loading...") &&(
-
-                  <Button 
-                    colorScheme="green"
-                    onClick={handlePdfDownloading}
-                    padding="2em"
-                    borderRadius="20px"
-                    style={{ marginTop: "1em" , marginLeft: "1em", marginRight: "1em", marginBottom: "1em"}}
-                  >
-                    Download PDF
-                  </Button>
+                  {descriptionSentence === "Loading..." ||
+                  wholeText === "Loading..." ||
+                  bulletList === "Loading..." ? (
+                    <Spinner style={{marginLeft: "1em",marginRight: "1em"}} />
+                  ) : (
+                    descriptionSentence !== "Unfilled" &&
+                    wholeText !== "Unfilled" &&
+                    bulletList !== "Unfilled" && (
+                      <Button
+                        colorScheme="green"
+                        onClick={handlePdfDownloading}
+                        padding="2em"
+                        borderRadius="20px"
+                        style={{
+                          marginTop: "1em",
+                          marginLeft: "1em",
+                          marginRight: "1em",
+                          marginBottom: "1em",
+                        }}
+                      >
+                        Download PDF
+                      </Button>
+                    )
                   )}
                 </Center>
               </div>
