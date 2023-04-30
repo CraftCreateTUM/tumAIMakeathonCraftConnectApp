@@ -1,4 +1,5 @@
-# tumAIMakeathonCraftConnectApp
+# tumAIMakeathonCraftConnectApp - CraftConnect 
+
 Makeathon app - Solution for language barriers within the work industry.
 
 
