@@ -336,6 +336,7 @@ function App() {
                     height: "75%",
                     width: "100%",
                     backgroundColor: "#e9e9e9",
+                    padding: "0.1em",
                   }}
                 >
                   <Box style={{ padding: "0.8em" }}>
