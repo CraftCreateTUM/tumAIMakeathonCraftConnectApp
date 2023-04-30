@@ -34,7 +34,7 @@ def process_data(data):
     description = data["description"]
     servicenumber = data["servicenumber"]
     dotlist_str = data['dotlist']  # get the string value of 'dotlist'
-    dotlist = dotlist_str.split('-')  # split the string and create a list
+    dotlist = dotlist_str.split(', ')  # split the string and create a list
     jobdescription = data["jobdescription"]
     date = data["date"]
 
@@ -81,11 +81,11 @@ def createpdf():
     elements.append(reason_text)
 
     elements.append(PageBreak())
+    text = ""
+    for i, item in enumerate(dotlist, start=1):
+        text += str(i) + ". " + item + "<br/>"
     
-    subheader2_text = "List of tasks performed<br/>"
-    subheader2 = Paragraph(subheader2_text, subheader_style)
-    elements.append(subheader2)
-    elements.append(Paragraph(dotlist, text_style))
+    elements.append(Paragraph(text, text_style))
 
     elements.append(Paragraph("Signature of the Electro Volt Technician", subheader_style))
     spacer = Spacer(1, 20)
